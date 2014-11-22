@@ -1,5 +1,5 @@
 #ifndef ENEMY_H
-#define NEMY_H
+#define ENEMY_H
 
 #include "Box2D/Box2D.h"
 #include "LTexture.h"
@@ -21,6 +21,9 @@ private:
 	b2FixtureDef fixtureDef;
 	LTexture texture;
 	b2Vec2 orientation;
+	b2Timer timer;
+	b2World* m_world;
+	SDL_Renderer* gRenderer;
 };
 
 #endif
