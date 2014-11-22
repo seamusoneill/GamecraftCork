@@ -31,6 +31,8 @@ private:
 
 	bool isAlive;
 	bool isSpaceDown;
+
+	void FireCannon();
 };
 
 #endif

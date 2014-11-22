@@ -53,14 +53,18 @@ void Player::Update() {
 	{
 		m_body->SetLinearVelocity(b2Vec2(0,0));
 	}
-	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::SPACE)) {
-		
-			//FireCannon()
-			isSpaceDown = true;
+	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::SPACE))
+	{
+		FireCannon();
+		isSpaceDown = true;
 	}
 	else { isSpaceDown = false; }
 }
 
 b2Vec2 Player::GetPosition() {
 	return b2Vec2(m_body->GetPosition().x, m_body->GetPosition().y);
+}
+
+void Player::FireCannon()
+{
 }
