@@ -10,7 +10,7 @@
 #include <vector>
 #include "ContactListener.h"
 #include "CONSTANTS.h"
-
+#include "World.h"
 
 
 //Program Variables
@@ -27,8 +27,10 @@ SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
 
+World m_gameWorld;
+
 void SetupWorld() {
-	b2Vec2 gravity(0, -9.81f);
+	b2Vec2 gravity(0, 0);
 	m_world = new b2World(gravity);
 	m_world->SetContactListener(ContactListener::getListener());
 }
@@ -43,13 +45,16 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
+	m_gameWorld.Initialize(m_world,gRenderer);
 }
 
 void DrawEntities() {
 
-	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_SetRenderDrawColor( gRenderer, 0, 0, 200, 1 );
 	SDL_RenderClear( gRenderer );
 
+
+	m_gameWorld.Draw(gRenderer,b2Vec2(0,0));
 	SDL_RenderPresent( gRenderer );
 }
 
@@ -63,7 +68,7 @@ void Quit() {
 
 void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
-
+	m_gameWorld.Update();
 	DrawEntities();
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
