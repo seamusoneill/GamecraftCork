@@ -10,7 +10,7 @@
 #include <vector>
 #include "ContactListener.h"
 #include "CONSTANTS.h"
-
+#include "Enemy.h"
 
 
 //Program Variables
@@ -27,8 +27,10 @@ SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
 
+Enemy* enemy;
+
 void SetupWorld() {
-	b2Vec2 gravity(0, -9.81f);
+	b2Vec2 gravity(0, 0);
 	m_world = new b2World(gravity);
 	m_world->SetContactListener(ContactListener::getListener());
 }
@@ -43,13 +45,15 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
+	enemy = new Enemy(m_world, gRenderer, b2Vec2(600, 300), 50);
 }
 
 void DrawEntities() {
-
+	//b2Vec2 offset = b2Vec2((player->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH/2, (player->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT/2);
+	b2Vec2 offset = b2Vec2(0,0);
 	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( gRenderer );
-
+	enemy->Draw( gRenderer, offset );
 	SDL_RenderPresent( gRenderer );
 }
 
@@ -75,6 +79,8 @@ void Update() {
 		isMouseDown = true;
 	}
 	else { isMouseDown = false; }
+
+	enemy->Update(b2Vec2(1,1));
 
 }
 
