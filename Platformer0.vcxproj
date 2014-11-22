@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -136,6 +136,7 @@
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Box2D\Box2DConfig.cmake" />
