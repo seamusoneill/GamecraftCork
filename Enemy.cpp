@@ -30,9 +30,9 @@ void Enemy::Draw(SDL_Renderer* gRenderer, b2Vec2 offset)
 void Enemy::Update(b2Vec2 playerPosition)
 {
 	int fireRadius = 10;
+	float rotationAngle = (atan2(-playerPosition.x, playerPosition.y));
 	if( b2Distance(playerPosition, dynamicBody->GetPosition()) > fireRadius)
 	{
-		float rotationAngle = TORADIANS*(atan2(-playerPosition.x, playerPosition.y));
 		dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle );
 
 		b2Vec2 m_velocity = playerPosition - dynamicBody->GetPosition();
@@ -45,7 +45,7 @@ void Enemy::Update(b2Vec2 playerPosition)
 	else
 	{
 		dynamicBody->SetLinearVelocity(b2Vec2(0,0));
-		dynamicBody->SetTransform( dynamicBody->GetPosition(), 90 );
+		dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle+90 );
 		if(timer.GetMilliseconds() >1000)
 		{
 			b2Vec2 direction = playerPosition - dynamicBody->GetPosition();
