@@ -6,7 +6,7 @@
 
 Pickup::Pickup(){
 }
-Pickup::Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float angleRadians, bool isWater){
+Pickup::Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater){
 	m_IsWater = isWater;
 
 	if (m_IsWater){
@@ -19,7 +19,6 @@ Pickup::Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float a
 	myBodyDef.type = b2_staticBody;
 	myBodyDef.position.Set(position.x*PIXELSTOMETRES, -position.y*PIXELSTOMETRES);
 	myBodyDef.userData = (void*)-2;
-	myBodyDef.angle = angleRadians;
 	staticBody = world->CreateBody(&myBodyDef);
 	polyShape.SetAsBox(mTexture.getWidth()/2*PIXELSTOMETRES, mTexture.getHeight()/2*PIXELSTOMETRES);
 	fixtureDef.shape = &polyShape;

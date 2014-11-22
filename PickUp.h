@@ -8,7 +8,7 @@
 class Pickup {
 public:
 	Pickup();
-	Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float angleRadians, bool isWater);
+	Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater);
 	~Pickup();
 	void Draw(SDL_Renderer* renderer, b2Vec2 offset);
 private:
