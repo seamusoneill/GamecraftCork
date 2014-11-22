@@ -3,14 +3,15 @@
 #define TORADIANS (-180/3.1415926536f)
 
 #include "Enemy.h"
+#include "CannonBall.h"
 
-Enemy::Enemy(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius)
+Enemy::Enemy(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, float radius) : m_world(theWorld), gRenderer(theRenderer)
 {
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.position.Set(position.x * PIXELSTOMETRES, -position.y * PIXELSTOMETRES);
 	myBodyDef.userData = (void*)0;
 	myBodyDef.angularDamping = 2;
-	dynamicBody = world->CreateBody(&myBodyDef);
+	dynamicBody = m_world->CreateBody(&myBodyDef);
 	circleShape.m_radius = radius * PIXELSTOMETRES;
 	fixtureDef.shape = &circleShape;
 	fixtureDef.filter.groupIndex = -1;
@@ -29,14 +30,28 @@ void Enemy::Draw(SDL_Renderer* gRenderer, b2Vec2 offset)
 
 void Enemy::Update(b2Vec2 playerPosition)
 {
-	float rotationAngle = TORADIANS*(atan2(-playerPosition.x, playerPosition.y));
-	dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle );
+	int fireRadius = 10;
+	if(dynamicBody->GetPosition().x - playerPosition.x > fireRadius)
+	{
+		float rotationAngle = TORADIANS*(atan2(-playerPosition.x, playerPosition.y));
+		dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle );
 
-	b2Vec2 m_velocity = playerPosition - dynamicBody->GetPosition();
-	m_velocity.Normalize();
-	m_velocity *= PIXELSTOMETRES * 75.00f;
+		b2Vec2 m_velocity = playerPosition - dynamicBody->GetPosition();
+		m_velocity.Normalize();
+		m_velocity *= PIXELSTOMETRES * 75.00f;
 
-	dynamicBody->SetLinearVelocity(m_velocity);
+		dynamicBody->SetLinearVelocity(m_velocity);
+		timer.Reset();
+	}
+	else
+	{
+		dynamicBody->SetLinearVelocity(b2Vec2(0,0));
+		dynamicBody->SetTransform( dynamicBody->GetPosition(), 90 );
+		if(timer.GetMilliseconds() >1000)
+		{
+			CannonBall* cannonBall = new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50);
+		}
+	}
 }
 
 b2Vec2 Enemy::GetPosition()
