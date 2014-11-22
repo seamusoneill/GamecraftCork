@@ -23,13 +23,15 @@ void ContactListener::setWorld(b2World* world){
 void ContactListener::BeginContact(b2Contact* contact){
 	//0 = player
 	//-1 = enemy
-	//-2 = pick up
+	//-2 = pick up water
 	//-3 = bullet
 	//-4 = Goal
+	//-5 = pick up health
 	//------------------------------
 	//-100 = to be destroyed/damaged
 	//-200 = dynamic event
 	//-300 = victory
+	//-400 regain health
 
 
 	b2Fixture* fixtureA = contact->GetFixtureA();
@@ -74,10 +76,12 @@ void ContactListener::BeginContact(b2Contact* contact){
 	if (i1 == -2){//if body1 is the pickup
 		if (i2 == 0){
 			body1->SetUserData((void*)-100);//Collect the pickup
+			body2->SetUserData((void*)-200);//player gets water
 		}
 	}
 	if (i1 == 0){
-		if (i2 == -2){//if body2 is the pickup                     
+		if (i2 == -2){//if body2 is the pickup  
+			body1->SetUserData((void*)-200);//player gets water
 			body2->SetUserData((void*)-100);//Collect the pickup	
 		}
 	}
@@ -151,7 +155,22 @@ void ContactListener::BeginContact(b2Contact* contact){
 		}
 	}
 #pragma endregion
+
+#pragma region PLAYER-HEALTH
+		if (i1 == -2){//if body1 is the pickup
+		if (i2 == 0){
+			body1->SetUserData((void*)-100);//Collect the pickup
+			body2->SetUserData((void*)-400);//player gets water
+		}
+	}
+	if (i1 == 0){
+		if (i2 == -2){//if body2 is the pickup  
+			body1->SetUserData((void*)-400);//player gets water
+			body2->SetUserData((void*)-100);//Collect the pickup	
+		}
+	}
 }
+#pragma endregion
 
 void ContactListener::EndContact(b2Contact* contact){
 

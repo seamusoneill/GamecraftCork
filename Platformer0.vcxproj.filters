@@ -67,6 +67,7 @@
     <ClCompile Include="hudDisplay.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Island.cpp" />
+    <ClCompile Include="HealthIcon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="hudDisplay.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Island.h" />
+    <ClInclude Include="HealthIcon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Box2D\Box2DConfig.cmake" />

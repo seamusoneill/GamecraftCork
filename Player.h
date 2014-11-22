@@ -16,6 +16,7 @@ public:
 	b2Vec2 GetVelocity();
 	int GetHealth();
 	int GetThirst();
+	void Collision();
 
 private:
 	b2BodyDef m_bodyDef;

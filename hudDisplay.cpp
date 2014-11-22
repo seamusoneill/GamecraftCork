@@ -4,17 +4,33 @@
 
 #include "hudDisplay.h"
 
-hudDisplay::hudDisplay(){}
-hudDisplay::hudDisplay(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position){
-	mHealthTexture.loadFromFile( "Heart.png", gRenderer );
-	mThurstTexture.loadFromFile( "Drop.png", gRenderer );
+HudDisplay::HudDisplay(){}
+HudDisplay::HudDisplay(b2World* world, SDL_Renderer* gRenderer, b2Vec2* healthPosition, b2Vec2* thirstPosition, int const healthArraySize, int const thirstArraySize){
+	
+	Health[healthArraySize];
+	Thirst[thirstArraySize];
 
+	for(int i = 0; i <healthArraySize;i++){
+
+		//	HealthIcon(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isHealth);
+	Health[i] = new HealthIcon(world, gRenderer, b2Vec2(healthPosition->x*i,healthPosition->y),true);
+	}
+
+	for(int i = 0; i <thirstArraySize;i++){
+	Thirst[i] = new HealthIcon(world, gRenderer, b2Vec2(thirstPosition->x*i,thirstPosition->y), false);
+	}
 
 }
-hudDisplay::~hudDisplay(){
+HudDisplay::~HudDisplay(){
 
 }
 
-void hudDisplay::Draw(){
+void HudDisplay::Draw(SDL_Renderer* renderer,int health, int thirst){
+	for(int i = 0; i < health; i++){//only draw as much health as the player has
+	Health[i]->Draw(renderer);
+	}
 
+	for(int i = 0; i < thirst; i++){//only draw as much thirst as the player has
+	Thirst[i]->Draw(renderer);
+	}
 }
