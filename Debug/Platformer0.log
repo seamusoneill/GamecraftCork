@@ -1,86 +1,9 @@
-﻿Build started 22/11/2014 16:11:44.
-     1>Project "C:\Users\tsstudent\Desktop\GamecraftCork\Platformer0.vcxproj" on node 2 (build target(s)).
-       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
-     1>InitializeBuildStatus:
-         Touching "Debug\Platformer0.unsuccessfulbuild".
-       ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./ /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ContactListener.cpp
-         ContactListener.cpp
-       Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exe" /NOLOGO /LIBPATH:./lib SDL2_mixer.lib SDL2.lib SDL2main.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Platformer0.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.lib" /MACHINE:X86 Debug\b2BroadPhase.obj
-         Debug\b2CollideCircle.obj
-         Debug\b2CollideEdge.obj
-         Debug\b2CollidePolygon.obj
-         Debug\b2Collision.obj
-         Debug\b2Distance.obj
-         Debug\b2DynamicTree.obj
-         Debug\b2TimeOfImpact.obj
-         Debug\b2ChainShape.obj
-         Debug\b2CircleShape.obj
-         Debug\b2EdgeShape.obj
-         Debug\b2PolygonShape.obj
-         Debug\b2BlockAllocator.obj
-         Debug\b2Draw.obj
-         Debug\b2FreeList.obj
-         Debug\b2Math.obj
-         Debug\b2Settings.obj
-         Debug\b2StackAllocator.obj
-         Debug\b2Stat.obj
-         Debug\b2Timer.obj
-         Debug\b2TrackedBlock.obj
-         Debug\b2Body.obj
-         Debug\b2ContactManager.obj
-         Debug\b2Fixture.obj
-         Debug\b2Island.obj
-         Debug\b2World.obj
-         Debug\b2WorldCallbacks.obj
-         Debug\b2ChainAndCircleContact.obj
-         Debug\b2ChainAndPolygonContact.obj
-         Debug\b2CircleContact.obj
-         Debug\b2Contact.obj
-         Debug\b2ContactSolver.obj
-         Debug\b2EdgeAndCircleContact.obj
-         Debug\b2EdgeAndPolygonContact.obj
-         Debug\b2PolygonAndCircleContact.obj
-         Debug\b2PolygonContact.obj
-         Debug\b2DistanceJoint.obj
-         Debug\b2FrictionJoint.obj
-         Debug\b2GearJoint.obj
-         Debug\b2Joint.obj
-         Debug\b2MotorJoint.obj
-         Debug\b2MouseJoint.obj
-         Debug\b2PrismaticJoint.obj
-         Debug\b2PulleyJoint.obj
-         Debug\b2RevoluteJoint.obj
-         Debug\b2RopeJoint.obj
-         Debug\b2WeldJoint.obj
-         Debug\b2WheelJoint.obj
-         Debug\b2Particle.obj
-         Debug\b2ParticleAssembly.obj
-         Debug\b2ParticleGroup.obj
-         Debug\b2ParticleSystem.obj
-         Debug\b2VoronoiDiagram.obj
-         Debug\b2Rope.obj
-         Debug\CannonBall.obj
-         Debug\hudDisplay.obj
-         Debug\Level.obj
-         Debug\LTexture.obj
-         Debug\ContactListener.obj
-         Debug\KeyboardManager.obj
-         Debug\main.obj
-         Debug\Enemy.obj
-         Debug\PickUp.obj
-         Debug\Player.obj
-         LINK : C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exe not found or not built by the last incremental link; performing full link
-            Creating library C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.lib and object C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exp
-         Platformer0.vcxproj -> C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exe
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exe;#1" /manifest Debug\Platformer0.exe.intermediate.manifest
-       FinalizeBuildStatus:
-         Deleting file "Debug\Platformer0.unsuccessfulbuild".
-         Touching "Debug\Platformer0.lastbuildstate".
-     1>Done Building Project "C:\Users\tsstudent\Desktop\GamecraftCork\Platformer0.vcxproj" (build target(s)).
+﻿Build started 22/11/2014 18:43:33.
+     1>Project "C:\Users\Séamus\Documents\GitHub\GamecraftCork\Platformer0.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Platformer0.vcxproj -> C:\Users\Séamus\Documents\GitHub\GamecraftCork\Debug\Platformer0.exe
+     1>Done Building Project "C:\Users\Séamus\Documents\GitHub\GamecraftCork\Platformer0.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.69
+Time Elapsed 00:00:00.15

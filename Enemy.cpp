@@ -27,32 +27,45 @@ void Enemy::Draw(SDL_Renderer* gRenderer, b2Vec2 offset)
 		NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 }
 
-void Enemy::Update(b2Vec2 playerPosition)
+void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity)
 {
 	int fireRadius = 10;
+	//int fireRadius = rand() % 4+5;
+
+	float rotationAngle = (atan2(-playerPosition.x, playerPosition.y));
+
+	b2Vec2 diff;
+	diff.x = playerVelocity.x - dynamicBody->GetLinearVelocity().x;
+	diff.y = playerVelocity.y - dynamicBody->GetLinearVelocity().y;
+
+	float turnAngle = atan2(diff.x, diff.y) * 3.14/180;
+
 	if( b2Distance(playerPosition, dynamicBody->GetPosition()) > fireRadius)
 	{
-		float rotationAngle = TORADIANS*(atan2(-playerPosition.x, playerPosition.y));
 		dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle );
+		
+		//dynamicBody->SetAngularVelocity(turnAngle);
+		//dynamicBody->SetTransform(dynamicBody->GetPosition(),turnAngle);
 
 		b2Vec2 m_velocity = playerPosition - dynamicBody->GetPosition();
 		m_velocity.Normalize();
 		m_velocity *= PIXELSTOMETRES * 75.00f;
 
-		dynamicBody->SetLinearVelocity(m_velocity);
+		dynamicBody->SetLinearVelocity(m_velocity*0.5);
 		timer.Reset();
 	}
 	else
 	{
 		dynamicBody->SetLinearVelocity(b2Vec2(0,0));
-		dynamicBody->SetTransform( dynamicBody->GetPosition(), 90 );
-		if(timer.GetMilliseconds() >1000)
+		dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle+90 );
+
+		if(timer.GetMilliseconds() >3000)
 		{
 			b2Vec2 direction = playerPosition - dynamicBody->GetPosition();
 			direction.Normalize();
 			direction *= PIXELSTOMETRES * 750.0f;
 
-			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50,direction));
+			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50, direction));
 			timer.Reset();
 		}
 	}

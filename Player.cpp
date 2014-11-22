@@ -12,7 +12,7 @@ Player::Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float r
 	m_shape.SetAsBox(radius / 2 * PIXELSTOMETRES, radius / 2 * PIXELSTOMETRES);
 	m_fixtureDef.shape = &m_shape;
 	m_body->CreateFixture(&m_fixtureDef);
-	m_speed = .3;
+	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
 }
 
@@ -24,10 +24,10 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 
 void Player::Update() {
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
-			m_body->SetAngularVelocity(-.2);
+			m_body->SetAngularVelocity(-.9);
 	}
 	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::A)) {
-			m_body->SetAngularVelocity(.2);
+			m_body->SetAngularVelocity(.9);
 	}
 	else{
 		m_body->SetAngularVelocity(0);
@@ -58,10 +58,32 @@ void Player::Update() {
 		isSpaceDown = true;
 	}
 	else { isSpaceDown = false; }
+
+	void Collision();//check collision with pickups
+}
+
+void Player::Collision(){
+	if((int)m_body->GetUserData() == -200){
+		if(m_health<3){
+			m_health++;
+		}
+	}
+	else if((int)m_body->GetUserData() == -400){
+		if(m_thirst<3){
+			m_thirst++;
+		}
+	}
+
+	m_body->SetUserData((void*)0);
+
 }
 
 b2Vec2 Player::GetPosition() {
 	return b2Vec2(m_body->GetPosition().x, m_body->GetPosition().y);
+}
+
+b2Vec2 Player::GetVelocity() {
+	return b2Vec2(m_body->GetLinearVelocity().x, m_body->GetLinearVelocity().y);
 }
 
 int Player::GetHealth(){

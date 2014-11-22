@@ -9,7 +9,7 @@ PickUp::PickUp(){
 PickUp::PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater){
 	m_IsWater = isWater;
 
-	if (m_IsWater){
+	if (m_IsWater==true){
 		mTexture.loadFromFile( "WaterBucket.png", gRenderer );
 	}
 	else{
@@ -20,7 +20,12 @@ PickUp::PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool i
 
 	myBodyDef.type = b2_staticBody;
 	myBodyDef.position.Set(position.x*PIXELSTOMETRES, -position.y*PIXELSTOMETRES);
+	if(m_IsWater==true){
 	myBodyDef.userData = (void*)-2;
+	}
+	else{
+	myBodyDef.userData = (void*)-5;
+	}
 	m_Body = world->CreateBody(&myBodyDef);
 	polyShape.SetAsBox(mTexture.getWidth()/2*PIXELSTOMETRES, mTexture.getHeight()/2*PIXELSTOMETRES);
 	fixtureDef.shape = &polyShape;

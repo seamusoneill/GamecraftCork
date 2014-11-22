@@ -13,9 +13,12 @@ public:
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset);
 	void Update();
 	b2Vec2 GetPosition();
-	
+
+	b2Vec2 GetVelocity();
 	int GetHealth();
 	int GetThirst();
+	void Collision();
+
 private:
 	b2BodyDef m_bodyDef;
 	b2Body* m_body;

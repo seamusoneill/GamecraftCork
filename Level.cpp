@@ -16,7 +16,7 @@ void Level::Update(){
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		//m_enemies[i]->Update(m_player->GetPosition());
+		m_enemies[i]->Update(m_player->GetPosition(),m_player->GetVelocity());
 	}
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
