@@ -10,15 +10,11 @@
 #include <vector>
 #include "ContactListener.h"
 #include "CONSTANTS.h"
-<<<<<<< HEAD
+
 #include "World.h"
 
-=======
 #include "Enemy.h"
 #include "Player.h"
-
-Player* p;
->>>>>>> a1370e1f8428e480a4ac16197a025bbbb8a43c6b
 
 //Program Variables
 bool isRunning = true;
@@ -35,8 +31,6 @@ SDL_Renderer* gRenderer;
 SDL_Event e;
 //Background
 LTexture m_background;
-
-Enemy* enemy;
 
 World m_gameWorld;
 
@@ -56,7 +50,6 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
-<<<<<<< HEAD
 	m_gameWorld.Initialize(m_world,gRenderer);
 }
 
@@ -65,28 +58,10 @@ void DrawEntities() {
 	SDL_SetRenderDrawColor( gRenderer, 0, 0, 200, 1 );
 	SDL_RenderClear( gRenderer );
 
-
-	m_gameWorld.Draw(gRenderer,b2Vec2(0,0));
-=======
-	enemy = new Enemy(m_world, gRenderer, b2Vec2(600, 300), 50);
-}
-
-void DrawEntities() {
-	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-	SDL_RenderClear( gRenderer );
->>>>>>> a1370e1f8428e480a4ac16197a025bbbb8a43c6b
-	SDL_RenderPresent( gRenderer );
-	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
-
-	m_background.loadFromFile("background.png", gRenderer);
-	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
-	enemy->Draw( gRenderer, offset );
-	
-	m_background.render(0, 0, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
-	p->Draw(gRenderer, offset);
-	
 	SDL_RenderPresent(gRenderer);
 }
+
+
 
 void Quit() {
 	SDL_DestroyWindow(window);
@@ -101,7 +76,6 @@ void Update() {
 	m_gameWorld.Update();
 	DrawEntities();
 
-	p->Update();
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();
@@ -112,8 +86,6 @@ void Update() {
 		isMouseDown = true;
 	}
 	else { isMouseDown = false; }
-
-	enemy->Update(p->GetPosition());
 
 }
 

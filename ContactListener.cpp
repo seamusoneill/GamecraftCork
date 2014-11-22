@@ -58,7 +58,7 @@ void ContactListener::BeginContact(b2Contact* contact){
 	}
 #pragma endregion
 
-
+}
 
 //#pragma region PLAYER-FALLINGPLATFORM
 // 	if(i1 == -7 || i1 == -300){

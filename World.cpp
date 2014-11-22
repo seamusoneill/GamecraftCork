@@ -10,7 +10,7 @@ World::World(){
 
 void World::Initialize(b2World* w,SDL_Renderer* r){
 	m_world = w;
-	m_islands.push_back(new Island(30,-110,0,1,r,m_world));
+	m_islands.push_back(new Island(0,0,0,1,r,m_world));
 }
 
 World::~World(){}
