@@ -14,8 +14,11 @@
 #include "Island.h"
 
 #include "Enemy.h"
+#include "Level.h"
 #include "Player.h"
 #include "AudioManager.h"
+
+Level* lvl;
 
 //Program Variables
 bool isRunning = true;
@@ -30,8 +33,6 @@ int32 positionIterations = 3;
 SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
-//Background
-LTexture m_background;
 
 Enemy *enemy;
 Player *p;
@@ -53,13 +54,16 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
+
 	m_island = new Island(90,90,0,1,gRenderer,m_world);
 	AudioManager::getAudioManager()->playBackgroundMusic();
 
-	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
-	m_background.loadFromFile("background.png", gRenderer);
 
-	enemy = new Enemy(m_world, gRenderer, b2Vec2(600, 300), 50);
+	lvl = new Level();
+	enemy = new Enemy(m_world, gRenderer, b2Vec2(1000, 1000), 40);
+
+	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
+	lvl->Initialize(m_world, gRenderer,p);
 }
 
 void DrawEntities() {
@@ -67,9 +71,12 @@ void DrawEntities() {
 	SDL_SetRenderDrawColor( gRenderer, 0, 0, 200, 1 );
 	SDL_RenderClear( gRenderer );
 	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
+
 	m_island->Draw(gRenderer,offset);
-	m_background.render(-offset.x, offset.y, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
 	enemy->Draw( gRenderer, offset );	
+
+
+	lvl->Draw(gRenderer, offset);
 	p->Draw(gRenderer, offset);
 	
 
@@ -91,6 +98,8 @@ void Update() {
 	m_island->Update();
 	DrawEntities();
 
+	p->Update();
+	lvl->Update();
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();
@@ -101,7 +110,6 @@ void Update() {
 		isMouseDown = true;
 	}
 	else { isMouseDown = false; }
-
 }
 
 int main(int argc, char* args[]) {

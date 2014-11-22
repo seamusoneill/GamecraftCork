@@ -65,7 +65,7 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Island.cpp" />
     <ClCompile Include="CannonBall.cpp" />
-    <ClCompile Include="hudDisplay.cpp" />
+    <ClCompile Include="Level.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -137,7 +137,7 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Island.h" />
     <ClInclude Include="CannonBall.h" />
-    <ClInclude Include="hudDisplay.h" />
+    <ClInclude Include="Level.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Box2D\Box2DConfig.cmake" />
@@ -151,6 +151,10 @@
     <None Include="Wiskey.png" />
     <None Include="CannonBall.png" />
     <None Include="waves.wav" />
+    <None Include="Bullet.png" />
+    <None Include="Drop.png" />
+    <None Include="Heart.png" />
+    <None Include="Platformer0.sdf" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />

@@ -135,7 +135,7 @@
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="CannonBall.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="hudDisplay.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
@@ -208,7 +208,7 @@
     <ClInclude Include="CannonBall.h" />
     <ClInclude Include="CONSTANTS.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="hudDisplay.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
@@ -220,9 +220,13 @@
     <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
+    <None Include="Bullet.png" />
     <None Include="CannonBall.png" />
+    <None Include="Drop.png" />
+    <None Include="Heart.png" />
     <None Include="Island.png" />
     <None Include="PirateShip.png" />
+    <None Include="Platformer0.sdf" />
     <None Include="Player.png" />
     <None Include="README.md" />
     <None Include="WaterBucket.png" />
