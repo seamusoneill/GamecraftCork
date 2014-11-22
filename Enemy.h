@@ -21,6 +21,9 @@ private:
 	b2FixtureDef fixtureDef;
 	LTexture texture;
 	b2Vec2 orientation;
+	b2Timer timer;
+	b2World* m_world;
+	SDL_Renderer* gRenderer;
 };
 
 #endif
