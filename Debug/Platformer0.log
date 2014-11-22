@@ -1,4 +1,4 @@
-﻿Build started 22/11/2014 14:37:51.
+﻿Build started 22/11/2014 14:39:41.
      1>Project "C:\Users\tsstudent\Desktop\GamecraftCork\Platformer0.vcxproj" on node 2 (build target(s)).
        Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
      1>InitializeBuildStatus:
@@ -15,4 +15,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.13
+Time Elapsed 00:00:00.12
