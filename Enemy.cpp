@@ -13,10 +13,10 @@ Enemy::Enemy(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, floa
 	dynamicBody = m_world->CreateBody(&myBodyDef);
 	circleShape.m_radius = radius * PIXELSTOMETRES;
 	fixtureDef.shape = &circleShape;
-	fixtureDef.filter.groupIndex = -1;
+	fixtureDef.filter.groupIndex = 0;
 	fixtureDef.density = 0.1;
 	dynamicBody->CreateFixture(&fixtureDef);
-
+	m_alive = true;
 	texture.loadFromFile( "PirateShip.png", gRenderer );
 }
 
@@ -67,12 +67,24 @@ void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity)
 
 			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50, direction));
 
+			direction = dynamicBody->GetWorldVector(b2Vec2(1,0));
+			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition()+direction*2.5, 50, direction*10));
 			timer.Reset();
 		}
+	}
+
+	if((int)dynamicBody->GetUserData() == -100)
+	{
+		m_alive = false;
 	}
 }
 
 b2Vec2 Enemy::GetPosition()
 {
 	return b2Vec2(dynamicBody->GetPosition().x, dynamicBody->GetPosition().y);
+}
+
+bool Enemy::GetAlive()
+{
+	return m_alive;
 }
