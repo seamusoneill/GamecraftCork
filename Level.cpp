@@ -8,6 +8,7 @@ void Level::Initialize(b2World* w,SDL_Renderer* r, Player* p)
 
 	m_background.loadFromFile("background.png", r);
 	m_player = p;
+	m_island = new Island(900, 300, 0, 1, r, w);
 	m_enemies.push_back(new Enemy(w, r, b2Vec2(600, 300), 50));
 	m_pickups.push_back(new PickUp(w, r, b2Vec2(100, 100), true));
 }
@@ -42,5 +43,7 @@ void Level::Draw(SDL_Renderer* r, b2Vec2 offset)
 	{
 		m_pickups[i]->Draw(r, offset);
 	}
+
+	m_island->Draw(r,offset);
 }
 
