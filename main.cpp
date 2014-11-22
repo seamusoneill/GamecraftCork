@@ -64,6 +64,11 @@ void DrawEntities() {
 	lvl->Draw(gRenderer, offset);
 	p->Draw(gRenderer, offset);
 	
+	for(int i = 0; i < p->cannonBalls.size();i++)
+	{
+		p->cannonBalls[i]->Draw(gRenderer, offset);
+	}
+	
 	SDL_RenderPresent(gRenderer);
 }
 

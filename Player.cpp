@@ -4,11 +4,11 @@
 
 #include "Player.h"
 
-Player::Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius) : isSpaceDown(false) {
+Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, float radius) : isSpaceDown(false), m_world(theWorld), gRenderer(theRenderer) {
 	m_bodyDef.type = b2_dynamicBody;
 	m_bodyDef.position.Set(position.x * PIXELSTOMETRES, -position.y * PIXELSTOMETRES);
 	m_bodyDef.userData = (void*)0;
-	m_body = world->CreateBody(&m_bodyDef);
+	m_body = m_world->CreateBody(&m_bodyDef);
 	m_shape.SetAsBox(radius / 2 * PIXELSTOMETRES, radius / 2 * PIXELSTOMETRES);
 	m_fixtureDef.shape = &m_shape;
 	m_body->CreateFixture(&m_fixtureDef);
@@ -96,4 +96,10 @@ int Player::GetThirst(){
 
 void Player::FireCannon()
 {
+	if(timer.GetMilliseconds() >500)
+	{
+		b2Vec2 direction = m_body->GetWorldVector(b2Vec2(0,1));
+		cannonBalls.push_back(new CannonBall(m_world, gRenderer, m_body->GetPosition()+direction*2.1, 50, direction*10));
+		timer.Reset();
+	}
 }
