@@ -39,3 +39,10 @@ void Pickup::Collected(b2World* world){
 	m_alive = false;
 	world->DestroyBody(m_Body);
 }
+
+bool Pickup::GetIsWater(){
+	return m_IsWater;
+}
+float Pickup::GetValue(){
+	return m_value;
+}

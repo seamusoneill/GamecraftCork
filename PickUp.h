@@ -12,6 +12,9 @@ public:
 	~Pickup();
 	void Draw(SDL_Renderer* renderer, b2Vec2 offset);
 	void Collected(b2World* world);
+
+	bool GetIsWater();
+	float GetValue();
 private:
 		
 	b2BodyDef myBodyDef;
