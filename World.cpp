@@ -42,7 +42,7 @@ Island::Island(float x, float y, int type, float scale,SDL_Renderer* r,b2World* 
 	b2BodyDef		l_bodyDef;
 	b2PolygonShape	l_squareShape;
 	b2FixtureDef	l_fixtureDef;
-
+	l_bodyDef.userData = (void*)-3;
 	l_bodyDef.type = b2_staticBody;
 	l_bodyDef.position = b2Vec2(x * PIXELSTOMETRES,y *PIXELSTOMETRES);
 	m_body = w->CreateBody(&l_bodyDef);

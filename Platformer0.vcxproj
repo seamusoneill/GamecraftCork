@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -132,10 +132,14 @@
     <ClCompile Include="Box2D\Particle\b2ParticleSystem.cpp" />
     <ClCompile Include="Box2D\Particle\b2VoronoiDiagram.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PickUp.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -198,13 +202,24 @@
     <ClInclude Include="Box2D\Particle\b2VoronoiDiagram.h" />
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
     <ClInclude Include="CONSTANTS.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
+    <ClInclude Include="PickUp.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
+    <None Include="Island.png" />
+    <None Include="PirateShip.png" />
+    <None Include="Player.png" />
+    <None Include="README.md" />
+    <None Include="WaterBucket.png" />
+    <None Include="Wiskey.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />
