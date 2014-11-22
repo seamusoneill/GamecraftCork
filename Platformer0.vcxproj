@@ -228,6 +228,7 @@
     <None Include="Bullet.png" />
     <None Include="CannonBall.png" />
     <None Include="Drop.png" />
+    <None Include="GameOver.png" />
     <None Include="Heart.png" />
     <None Include="Island.png" />
     <None Include="PirateShip.png" />

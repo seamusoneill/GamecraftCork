@@ -15,6 +15,7 @@ Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, fl
 	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
 	m_health = 3;
+	isAlive = true;
 }
 
 void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
@@ -23,7 +24,7 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 			//Remove the player Image from the game and replace it with the game over screen
 				m_texture.loadFromFile("GameOver.png", gRenderer);
 				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
-	
+				isAlive = false;
 		}
 		else{
 			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
@@ -112,10 +113,10 @@ int Player::GetThirst(){
 
 void Player::FireCannon()
 {
-	if(timer.GetMilliseconds() >500)
+	if(timer.GetMilliseconds() >500 && isAlive == true)
 	{
 		b2Vec2 direction = m_body->GetWorldVector(b2Vec2(0,1));
-		cannonBalls.push_back(new CannonBall(m_world, gRenderer, m_body->GetPosition()+direction*2.1, 50, direction*10));
+		cannonBalls.push_back(new CannonBall(m_world, gRenderer, m_body->GetPosition()+direction*2.5, 50, direction*10));
 		timer.Reset();
 	}
 }

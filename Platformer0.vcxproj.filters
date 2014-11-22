@@ -159,6 +159,7 @@
     <None Include="Bullet.png" />
     <None Include="waves.wav" />
     <None Include="Island.png" />
+    <None Include="GameOver.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />
