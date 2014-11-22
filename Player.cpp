@@ -65,6 +65,14 @@ b2Vec2 Player::GetPosition() {
 	return b2Vec2(m_body->GetPosition().x, m_body->GetPosition().y);
 }
 
+int Player::GetHealth(){
+	return m_health;
+}
+
+int Player::GetThirst(){
+	return m_thirst;
+}
+
 void Player::FireCannon()
 {
 }
