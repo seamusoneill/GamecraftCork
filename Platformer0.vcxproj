@@ -133,6 +133,8 @@
     <ClCompile Include="Box2D\Particle\b2VoronoiDiagram.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="CannonBall.cpp" />
+    <ClCompile Include="hudDisplay.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
@@ -203,6 +205,8 @@
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
     <ClInclude Include="CannonBall.h" />
     <ClInclude Include="CONSTANTS.h" />
+    <ClInclude Include="hudDisplay.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
@@ -211,10 +215,14 @@
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
+    <None Include="Bullet.png" />
     <None Include="CannonBall.png" />
+    <None Include="Drop.png" />
+    <None Include="Heart.png" />
     <None Include="PirateShip.png" />
     <None Include="Player.png" />
     <None Include="README.md" />

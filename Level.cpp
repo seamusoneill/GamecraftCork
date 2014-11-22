@@ -25,6 +25,10 @@ void Level::Draw(SDL_Renderer* r, b2Vec2 offset)
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		m_enemies[i]->Draw(r, offset);
+		for(int j = 0; j < m_enemies[i]->cannonBalls.size();j++)
+		{
+			m_enemies[i]->cannonBalls[j]->Draw(r, offset);
+		}
 	}
 }
 

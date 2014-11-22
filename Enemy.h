@@ -15,6 +15,7 @@ public:
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset );
 	void Update(b2Vec2 playerPosition);
 	b2Vec2 GetPosition();
+	std::vector<CannonBall*> cannonBalls;
 
 private:
 	b2BodyDef myBodyDef;
@@ -27,7 +28,6 @@ private:
 	b2Timer timer;
 	b2World* m_world;
 	SDL_Renderer* gRenderer;
-	std::vector<CannonBall*> cannonBalls;
 };
 
 #endif

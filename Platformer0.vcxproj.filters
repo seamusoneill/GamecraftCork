@@ -63,6 +63,8 @@
     <ClCompile Include="PickUp.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="CannonBall.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="hudDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -132,6 +134,8 @@
     <ClInclude Include="PickUp.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="CannonBall.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="hudDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Box2D\Box2DConfig.cmake" />
@@ -143,6 +147,10 @@
     <None Include="README.md" />
     <None Include="background.png" />
     <None Include="CannonBall.png" />
+    <None Include="Heart.png" />
+    <None Include="Drop.png" />
+    <None Include="Bullet.png" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />

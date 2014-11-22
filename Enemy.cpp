@@ -48,7 +48,11 @@ void Enemy::Update(b2Vec2 playerPosition)
 		dynamicBody->SetTransform( dynamicBody->GetPosition(), 90 );
 		if(timer.GetMilliseconds() >1000)
 		{
-			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50));
+			b2Vec2 direction = playerPosition - dynamicBody->GetPosition();
+			direction.Normalize();
+			direction *= PIXELSTOMETRES * 750.0f;
+
+			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50,direction));
 			timer.Reset();
 		}
 	}
