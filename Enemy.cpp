@@ -8,7 +8,7 @@ Enemy::Enemy(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, floa
 {
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.position.Set(position.x * PIXELSTOMETRES, -position.y * PIXELSTOMETRES);
-	myBodyDef.userData = (void*)0;
+	myBodyDef.userData = (void*)-1;
 	myBodyDef.angularDamping = 2;
 	dynamicBody = m_world->CreateBody(&myBodyDef);
 	circleShape.m_radius = radius * PIXELSTOMETRES;

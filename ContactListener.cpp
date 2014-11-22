@@ -26,10 +26,6 @@ void ContactListener::BeginContact(b2Contact* contact){
 	//-2 = pick up
 	//-3 = bullet
 	//-4 = Goal
-	//-5 = 
-	//-6 = 
-	//-7 = 
-	//-8 = 
 	//------------------------------
 	//-100 = to be destroyed/damaged
 	//-200 = dynamic event
@@ -87,6 +83,32 @@ void ContactListener::BeginContact(b2Contact* contact){
 	}
 #pragma endregion
 
+#pragma region BULLET-PICKUP
+	if (i1 == -2){//if body1 is the pickup
+		if (i2 == -3){
+			body1->SetUserData((void*)-2);
+		}
+	}
+	if (i1 == -1){
+		if (i2 == -3){//if body2 is the pickup                     
+			body2->SetUserData((void*)-2);
+		}
+	}
+#pragma endregion
+
+#pragma region PIRATE-PICKUP
+	if (i1 == -2){//if body1 is the pickup
+		if (i2 == -1){
+			body1->SetUserData((void*)-2);
+		}
+	}
+	if (i1 == -1){
+		if (i2 == -2){//if body2 is the pickup        
+			body2->SetUserData((void*)-2);
+		}
+	}
+#pragma endregion
+
 #pragma region BULLET-ENEMY
 	if (i1 == -3){ //If body1 is the bullet
 		if (i2 == -1){
@@ -129,49 +151,6 @@ void ContactListener::BeginContact(b2Contact* contact){
 		}
 	}
 #pragma endregion
-
-	/* Spare Contacts */
-#pragma region PLAYER-CONVERYOR
-	if(i1 == -8){
-		if(i2 == 0){          
-			body2->SetUserData((void*)-300);
-		}
-	}
-	if(i1 == 0){
-		if(i2 == -8){      
-			body1->SetUserData((void*)-300);
-		}
-	}
-#pragma endregion
-
-#pragma region BOMB-LIFTPLATFORM
-	if(i1 == -5 || i1 == -200){
-		if(i2 == -1){          
-			body2->SetUserData((void*)-100);
-		}
-	}
-	if(i1 == -1){
-		if(i2 == -5 || i2 == -200){      
-			body1->SetUserData((void*)-100);
-		}
-	}
-#pragma endregion
-
-#pragma region BOMBANDBARRIER-FALLINGPLATFORM
-	if(i1 == -7){
-		if(i2 == -1 || i2 == -3){
-				body1->SetUserData((void*)-300); //hold the platform
-				body2->SetUserData((void*)-100); //Destroy the bomb
-		}
-	}
-	if(i1 == -1 || i1 == -3){
-		if(i2 == -7){
-			body1->SetUserData((void*)-100); //Destroy the bomb
-			body2->SetUserData((void*)-300); //hold the platform
-		}
-	}
-#pragma endregion
-#
 }
 
 void ContactListener::EndContact(b2Contact* contact){
