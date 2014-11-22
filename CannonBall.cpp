@@ -8,13 +8,14 @@ CannonBall::CannonBall(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,
 {
 	myBodyDef.type = b2_dynamicBody;
 	myBodyDef.position.Set(position.x, position.y);
-	myBodyDef.userData = (void*)0;
+	myBodyDef.userData = (void*)-3;
 	myBodyDef.angularDamping = 2;
 	dynamicBody = world->CreateBody(&myBodyDef);
 	circleShape.m_radius = radius * PIXELSTOMETRES;
 	fixtureDef.shape = &circleShape;
 	fixtureDef.filter.groupIndex = -1;
 	fixtureDef.density = 0.1;
+	fixtureDef.filter.groupIndex = -1;
 	dynamicBody->CreateFixture(&fixtureDef);
 
 	dynamicBody->SetLinearVelocity(direction);
