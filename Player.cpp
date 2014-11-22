@@ -14,12 +14,22 @@ Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, fl
 	m_body->CreateFixture(&m_fixtureDef);
 	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
+	m_health = 3;
 }
 
 void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
-	m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
-		-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + offset.y,
-		NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer);
+
+		if(m_health<=0){
+			//Remove the player Image from the game and replace it with the game over screen
+				m_texture.loadFromFile("GameOver.png", gRenderer);
+				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
+	
+		}
+		else{
+			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
+				-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + offset.y,
+				NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer);
+		}
 }
 
 void Player::Update() {
@@ -59,7 +69,9 @@ void Player::Update() {
 	}
 	else { isSpaceDown = false; }
 
-	void Collision();//check collision with pickups
+	 Collision();//check collision with pickups
+
+
 }
 
 void Player::Collision(){
@@ -72,6 +84,10 @@ void Player::Collision(){
 		if(m_thirst<3){
 			m_thirst++;
 		}
+	}
+	else if((int)m_body->GetUserData() == -100){
+			m_health--;
+		
 	}
 
 	m_body->SetUserData((void*)0);
