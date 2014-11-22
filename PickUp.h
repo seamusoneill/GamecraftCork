@@ -5,11 +5,11 @@
 #include "Box2D\Box2D.h"
 #include "LTexture.h"
 
-class Pickup {
+class PickUp {
 public:
-	Pickup();
-	Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater);
-	~Pickup();
+	PickUp();
+	PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater);
+	~PickUp();
 	void Draw(SDL_Renderer* renderer, b2Vec2 offset);
 	void Collected(b2World* world);
 
@@ -24,9 +24,9 @@ private:
 	b2FixtureDef fixtureDef;
 	LTexture mTexture;
 
-	float m_value;
-	bool m_IsWater;
-	bool m_alive;
+	float m_value; //the value that the pickup will add to the health or thirst
+	bool m_IsWater; // if this varible is true the varible is water, otherwise it is alcohol (i.e. health)
+	bool m_alive; //if this is true draw the texture and update the body
 };
 
 #endif

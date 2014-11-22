@@ -4,9 +4,9 @@
 
 #include "PickUp.h"
 
-Pickup::Pickup(){
+PickUp::PickUp(){
 }
-Pickup::Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater){
+PickUp::PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater){
 	m_IsWater = isWater;
 
 	if (m_IsWater){
@@ -27,7 +27,7 @@ Pickup::Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool i
 	m_Body->CreateFixture(&fixtureDef);
 }
 
-void Pickup::Draw(SDL_Renderer* renderer, b2Vec2 offset){
+void PickUp::Draw(SDL_Renderer* renderer, b2Vec2 offset){
 	if (m_alive == true){
 	mTexture.render((m_Body->GetPosition().x * METRESTOPIXELS) - (mTexture.getWidth() / 2) - offset.x,
 		-(m_Body->GetPosition().y * METRESTOPIXELS) - (mTexture.getHeight() / 2) + offset.y, NULL,NULL , NULL, SDL_FLIP_NONE, renderer );
@@ -35,14 +35,16 @@ void Pickup::Draw(SDL_Renderer* renderer, b2Vec2 offset){
 }
 
 
-void Pickup::Collected(b2World* world){
+void PickUp::Collected(b2World* world){
+	if(myBodyDef.userData == (void*)-100){
 	m_alive = false;
 	world->DestroyBody(m_Body);
+	}
 }
 
-bool Pickup::GetIsWater(){
+bool PickUp::GetIsWater(){
 	return m_IsWater;
 }
-float Pickup::GetValue(){
+float PickUp::GetValue(){
 	return m_value;
 }

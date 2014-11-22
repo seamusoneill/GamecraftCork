@@ -49,20 +49,21 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
+
+	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
+	m_background.loadFromFile("background.png", gRenderer);
+
 	enemy = new Enemy(m_world, gRenderer, b2Vec2(600, 300), 50);
 }
 
 void DrawEntities() {
 	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( gRenderer );
-	SDL_RenderPresent( gRenderer );
-	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
 
-	m_background.loadFromFile("background.png", gRenderer);
 	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
-	enemy->Draw( gRenderer, offset );
-	
-	m_background.render(0, 0, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
+
+	m_background.render(-offset.x, offset.y, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
+	enemy->Draw( gRenderer, offset );	
 	p->Draw(gRenderer, offset);
 	
 	SDL_RenderPresent(gRenderer);
