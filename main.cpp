@@ -11,7 +11,9 @@
 #include "ContactListener.h"
 #include "CONSTANTS.h"
 #include "Enemy.h"
+#include "Player.h"
 
+Player* p;
 
 //Program Variables
 bool isRunning = true;
@@ -26,6 +28,8 @@ int32 positionIterations = 3;
 SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
+//Background
+LTexture m_background;
 
 Enemy* enemy;
 
@@ -36,9 +40,9 @@ void SetupWorld() {
 }
 
 void SetupSDL() {
-	window = SDL_CreateWindow( "Treasure Flood", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, CONSTANTS::SCREEN_WIDTH,CONSTANTS::SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-	gRenderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-    IMG_Init( IMG_INIT_PNG );
+	window = SDL_CreateWindow("Treasure Flood", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, CONSTANTS::SCREEN_WIDTH, CONSTANTS::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	gRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	IMG_Init(IMG_INIT_PNG);
 }
 
 void Initialize()
@@ -49,17 +53,24 @@ void Initialize()
 }
 
 void DrawEntities() {
-	//b2Vec2 offset = b2Vec2((player->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH/2, (player->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT/2);
-	b2Vec2 offset = b2Vec2(0,0);
 	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( gRenderer );
-	enemy->Draw( gRenderer, offset );
 	SDL_RenderPresent( gRenderer );
+	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
+
+	m_background.loadFromFile("background.png", gRenderer);
+	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
+	enemy->Draw( gRenderer, offset );
+	
+	m_background.render(0, 0, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
+	p->Draw(gRenderer, offset);
+	
+	SDL_RenderPresent(gRenderer);
 }
 
 void Quit() {
-	SDL_DestroyWindow( window );
-	SDL_DestroyRenderer( gRenderer );
+	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(gRenderer);
 	IMG_Quit();
 	SDL_Quit();
 	isRunning = false;
@@ -69,6 +80,8 @@ void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
 
 	DrawEntities();
+
+	p->Update();
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();
@@ -80,11 +93,11 @@ void Update() {
 	}
 	else { isMouseDown = false; }
 
-	enemy->Update(b2Vec2(1,1));
+	enemy->Update(p->GetPosition());
 
 }
 
-int main( int argc, char* args[] ) {
+int main(int argc, char* args[]) {
 	Initialize();
 
 	while (isRunning) Update();

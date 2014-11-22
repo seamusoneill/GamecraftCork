@@ -1,4 +1,4 @@
-﻿Build started 22/11/2014 12:59:46.
+﻿Build started 22/11/2014 13:06:16.
      1>Project "C:\Users\tsstudent\Desktop\GamecraftCork\Platformer0.vcxproj" on node 2 (build target(s)).
        Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
      1>InitializeBuildStatus:
@@ -67,6 +67,7 @@
          Debug\main.obj
          Debug\Enemy.obj
          Debug\PickUp.obj
+         Debug\Player.obj
          LINK : C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exe not found or not built by the last incremental link; performing full link
             Creating library C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.lib and object C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exp
          Platformer0.vcxproj -> C:\Users\tsstudent\Desktop\GamecraftCork\Debug\Platformer0.exe
@@ -79,4 +80,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.93
+Time Elapsed 00:00:01.88

@@ -10,7 +10,7 @@ class KeyboardManager {
 public:
 	static KeyboardManager* m_instance;
 	static KeyboardManager* instance();
-	enum key {A, D, SPACE, ESC, MOUSE};
+	enum key {A, D,W,S, SPACE, ESC, MOUSE};
 	bool IsKeyDown(key);
 private:
 	KeyboardManager();

@@ -15,17 +15,34 @@ Pickup::Pickup(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool i
 	else{
 		mTexture.loadFromFile( "Wiskey.png", gRenderer );
 	}
+	m_alive = true;
+	m_value = 0.5f;
 
 	myBodyDef.type = b2_staticBody;
 	myBodyDef.position.Set(position.x*PIXELSTOMETRES, -position.y*PIXELSTOMETRES);
 	myBodyDef.userData = (void*)-2;
-	staticBody = world->CreateBody(&myBodyDef);
+	m_Body = world->CreateBody(&myBodyDef);
 	polyShape.SetAsBox(mTexture.getWidth()/2*PIXELSTOMETRES, mTexture.getHeight()/2*PIXELSTOMETRES);
 	fixtureDef.shape = &polyShape;
-	staticBody->CreateFixture(&fixtureDef);
+	m_Body->CreateFixture(&fixtureDef);
 }
 
 void Pickup::Draw(SDL_Renderer* renderer, b2Vec2 offset){
-	mTexture.render((staticBody->GetPosition().x * METRESTOPIXELS) - (mTexture.getWidth() / 2) - offset.x,
-		-(staticBody->GetPosition().y * METRESTOPIXELS) - (mTexture.getHeight() / 2) + offset.y, NULL,NULL , NULL, SDL_FLIP_NONE, renderer );
+	if (m_alive == true){
+	mTexture.render((m_Body->GetPosition().x * METRESTOPIXELS) - (mTexture.getWidth() / 2) - offset.x,
+		-(m_Body->GetPosition().y * METRESTOPIXELS) - (mTexture.getHeight() / 2) + offset.y, NULL,NULL , NULL, SDL_FLIP_NONE, renderer );
+	}
+}
+
+
+void Pickup::Collected(b2World* world){
+	m_alive = false;
+	world->DestroyBody(m_Body);
+}
+
+bool Pickup::GetIsWater(){
+	return m_IsWater;
+}
+float Pickup::GetValue(){
+	return m_value;
 }

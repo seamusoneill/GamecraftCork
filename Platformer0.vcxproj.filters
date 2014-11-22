@@ -61,6 +61,7 @@
     <ClCompile Include="Box2D\Common\b2TrackedBlock.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="PickUp.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -128,6 +129,7 @@
     <ClInclude Include="CONSTANTS.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="PickUp.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Box2D\Box2DConfig.cmake" />
@@ -135,6 +137,9 @@
     <None Include="WaterBucket.png" />
     <None Include="Wiskey.png" />
     <None Include="PirateShip.png" />
+    <None Include="Player.png" />
+    <None Include="README.md" />
+    <None Include="background.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />
