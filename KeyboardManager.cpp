@@ -32,6 +32,10 @@ bool KeyboardManager::IsKeyDown(key k) {
 		return true;
 	if (k==KeyboardManager::A && keyboardState[SDLK_a] == true)
 		return true;
+	if (k == KeyboardManager::W && keyboardState[SDLK_w] == true)
+		return true;
+	if (k == KeyboardManager::S && keyboardState[SDLK_s] == true)
+		return true;
 	if (k==KeyboardManager::SPACE && keyboardState[SDLK_SPACE] == true)
 		return true;
 	if (k==KeyboardManager::MOUSE && keyboardState[0] == true)

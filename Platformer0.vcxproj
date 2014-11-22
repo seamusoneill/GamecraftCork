@@ -137,6 +137,8 @@
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="PickUp.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -203,10 +205,18 @@
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="PickUp.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
+    <None Include="PirateShip.png" />
+    <None Include="Player.png" />
+    <None Include="README.md" />
+    <None Include="WaterBucket.png" />
+    <None Include="Wiskey.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />

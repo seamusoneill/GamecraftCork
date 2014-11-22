@@ -10,8 +10,8 @@
 #include <vector>
 #include "ContactListener.h"
 #include "CONSTANTS.h"
+#include "Enemy.h"
 #include "Player.h"
-
 
 Player* p;
 
@@ -28,6 +28,10 @@ int32 positionIterations = 3;
 SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
+//Background
+LTexture m_background;
+
+Enemy* enemy;
 
 void SetupWorld() {
 	b2Vec2 gravity(0, 0);
@@ -47,16 +51,21 @@ void Initialize()
 	SetupSDL();
 
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
+	m_background.loadFromFile("background.png", gRenderer);
+
+	enemy = new Enemy(m_world, gRenderer, b2Vec2(600, 300), 50);
 }
 
 void DrawEntities() {
-
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_RenderClear(gRenderer);
+	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_RenderClear( gRenderer );
 
 	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
+	m_background.render(-offset.x, offset.y, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
+	enemy->Draw( gRenderer, offset );	
 	p->Draw(gRenderer, offset);
+	
 	SDL_RenderPresent(gRenderer);
 }
 
@@ -73,6 +82,8 @@ void Update() {
 
 	DrawEntities();
 
+	p->Update();
+
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();
 
@@ -82,6 +93,8 @@ void Update() {
 		isMouseDown = true;
 	}
 	else { isMouseDown = false; }
+
+	enemy->Update(p->GetPosition());
 
 }
 

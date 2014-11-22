@@ -4,6 +4,8 @@
 #include "Box2D/Box2D.h"
 #include "LTexture.h"
 #include "KeyboardManager.h"
+#include <cmath>
+
 class Player {
 public:
 	Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius);
@@ -19,6 +21,15 @@ private:
 	b2Fixture* m_fixture;
 	b2FixtureDef m_fixtureDef;
 	LTexture m_texture;
+	float m_angle;
+	float m_speed;
+
+	b2Vec2 m_velocity;
+	int m_health;
+	int m_ammo;
+	int m_thirst;
+
+	bool isAlive;
 	bool isSpaceDown;
 };
 
