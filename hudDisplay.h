@@ -17,6 +17,6 @@ private:
 
 	LTexture mHealthTexture;
 	LTexture mThurstTexture;
-}
+};
 
 #endif
