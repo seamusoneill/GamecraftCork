@@ -219,7 +219,6 @@
     <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
-    <None Include="Bullet.png" />
     <None Include="CannonBall.png" />
     <None Include="Drop.png" />
     <None Include="Heart.png" />
