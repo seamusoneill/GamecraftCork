@@ -36,8 +36,10 @@ void PickUp::Draw(SDL_Renderer* renderer, b2Vec2 offset){
 
 
 void PickUp::Collected(b2World* world){
+	if(myBodyDef.userData == (void*)-100){
 	m_alive = false;
 	world->DestroyBody(m_Body);
+	}
 }
 
 bool PickUp::GetIsWater(){
