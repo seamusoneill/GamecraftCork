@@ -4,6 +4,8 @@
 #include "Box2D/Box2D.h"
 #include "LTexture.h"
 #include "KeyboardManager.h"
+#include "CannonBall.h"
+#include <vector>
 #include <cmath>
 
 class Player {
@@ -13,6 +15,12 @@ public:
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset);
 	void Update();
 	b2Vec2 GetPosition();
+
+	b2Vec2 GetVelocity();
+	int GetHealth();
+	int GetThirst();
+	void Collision();
+	std::vector<CannonBall*> cannonBalls;
 
 private:
 	b2BodyDef m_bodyDef;
@@ -33,9 +41,10 @@ private:
 	bool isSpaceDown;
 
 	void FireCannon();
-
-	int GetHealth();
-	int GetThirst();
+	b2Timer timer;
+	b2Timer thirstTimer;
+	b2World* m_world;
+	SDL_Renderer* gRenderer;
 };
 
 #endif

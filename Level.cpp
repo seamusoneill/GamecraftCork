@@ -13,9 +13,10 @@ void Level::Initialize(b2World* w,SDL_Renderer* r, Player* p)
 }
 
 void Level::Update(){
+
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Update(m_player->GetPosition());
+		m_enemies[i]->Update(m_player->GetPosition(),m_player->GetVelocity());
 	}
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
@@ -25,7 +26,7 @@ void Level::Update(){
 
 void Level::Draw(SDL_Renderer* r, b2Vec2 offset)
 {
-	m_background.render(-offset.x, offset.y, NULL, 0, 0, SDL_FLIP_NONE, r);
+	m_background.render(-CONSTANTS::LEVEL_WIDTH/2 - offset.x, -CONSTANTS::LEVEL_HEIGHT/2 + offset.y, NULL, 0, 0, SDL_FLIP_NONE, r);
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{

@@ -12,7 +12,7 @@
 #include "CONSTANTS.h"
 #include "Level.h"
 #include "Player.h"
-
+#include "AudioManager.h"
 Player* p;
 
 Level* lvl;
@@ -50,19 +50,23 @@ void Initialize()
 	SetupWorld();
 	SetupSDL();
 	lvl = new Level();
-	
+	AudioManager::getAudioManager()->playBackgroundMusic();
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
 	lvl->Initialize(m_world, gRenderer,p);
 }
 
-void DrawEntities() {
+void DrawEntities(b2Vec2 offset) {
 	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( gRenderer );
 
-	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
-
+	
 	lvl->Draw(gRenderer, offset);
 	p->Draw(gRenderer, offset);
+	
+	for(int i = 0; i < p->cannonBalls.size();i++)
+	{
+		p->cannonBalls[i]->Draw(gRenderer, offset);
+	}
 	
 	SDL_RenderPresent(gRenderer);
 }
@@ -77,9 +81,30 @@ void Quit() {
 
 void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
+	
+	
+	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
-	DrawEntities();
-
+	if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
+	{
+		offset.x = -CONSTANTS::LEVEL_WIDTH / 2;
+	}
+	if (p->GetPosition().x > CONSTANTS::LEVEL_WIDTH/120)
+	{
+		offset.x = -CONSTANTS::LEVEL_WIDTH / 60;
+	}
+	//Bottom Screen
+	if (p->GetPosition().y < -CONSTANTS::LEVEL_HEIGHT/ 60 + 11.5)
+	{
+		offset.y = -CONSTANTS::LEVEL_HEIGHT / 5;
+	}
+	//Top screen
+	if (p->GetPosition().y > CONSTANTS::LEVEL_HEIGHT / 60 - 11.5)
+	{
+		offset.y = CONSTANTS::LEVEL_HEIGHT / 2;
+	}
+	b2Vec2 m_position = p->GetPosition();
+	DrawEntities(offset);
 	p->Update();
 	lvl->Update();
 

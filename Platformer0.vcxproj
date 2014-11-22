@@ -134,6 +134,7 @@
     <ClCompile Include="Box2D\Particle\b2VoronoiDiagram.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="CannonBall.cpp" />
+    <ClCompile Include="HealthIcon.cpp" />
     <ClCompile Include="hudDisplay.cpp" />
     <ClCompile Include="Island.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
     <ClInclude Include="CannonBall.h" />
     <ClInclude Include="CONSTANTS.h" />
+    <ClInclude Include="HealthIcon.h" />
     <ClInclude Include="hudDisplay.h" />
     <ClInclude Include="Island.h" />
     <ClInclude Include="Level.h" />
@@ -226,6 +228,7 @@
     <None Include="Bullet.png" />
     <None Include="CannonBall.png" />
     <None Include="Drop.png" />
+    <None Include="GameOver.png" />
     <None Include="Heart.png" />
     <None Include="Island.png" />
     <None Include="PirateShip.png" />

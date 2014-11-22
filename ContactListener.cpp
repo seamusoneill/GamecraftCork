@@ -24,17 +24,15 @@ void ContactListener::setWorld(b2World* world){
 void ContactListener::BeginContact(b2Contact* contact){
 	//0 = player
 	//-1 = enemy
-	//-2 = pick up
+	//-2 = pick up water
 	//-3 = bullet
 	//-4 = Goal
-	//-5 = 
-	//-6 = 
-	//-7 = 
-	//-8 = 
+	//-5 = pick up health
 	//------------------------------
 	//-100 = to be destroyed/damaged
 	//-200 = dynamic event
 	//-300 = victory
+	//-400 regain health
 
 
 	b2Fixture* fixtureA = contact->GetFixtureA();
@@ -80,12 +78,40 @@ void ContactListener::BeginContact(b2Contact* contact){
 		if (i2 == 0){
 			body1->SetUserData((void*)-100);//Collect the pickup
 			AudioManager::getAudioManager()->playPickup();
+			body2->SetUserData((void*)-200);//player gets water
 		}
 	}
 	if (i1 == 0){
-		if (i2 == -2){//if body2 is the pickup                     
+		if (i2 == -2){//if body2 is the pickup  
+			body1->SetUserData((void*)-200);//player gets water
 			body2->SetUserData((void*)-100);//Collect the pickup	
 			AudioManager::getAudioManager()->playPickup();
+		}
+	}
+#pragma endregion
+
+#pragma region BULLET-PICKUP
+	if (i1 == -2){//if body1 is the pickup
+		if (i2 == -3){
+			body1->SetUserData((void*)-2);
+		}
+	}
+	if (i1 == -1){
+		if (i2 == -3){//if body2 is the pickup                     
+			body2->SetUserData((void*)-2);
+		}
+	}
+#pragma endregion
+
+#pragma region PIRATE-PICKUP
+	if (i1 == -2){//if body1 is the pickup
+		if (i2 == -1){
+			body1->SetUserData((void*)-2);
+		}
+	}
+	if (i1 == -1){
+		if (i2 == -2){//if body2 is the pickup        
+			body2->SetUserData((void*)-2);
 		}
 	}
 #pragma endregion
@@ -137,49 +163,21 @@ void ContactListener::BeginContact(b2Contact* contact){
 	}
 #pragma endregion
 
-	/* Spare Contacts */
-#pragma region PLAYER-CONVERYOR
-	if(i1 == -8){
-		if(i2 == 0){          
-			body2->SetUserData((void*)-300);
+#pragma region PLAYER-HEALTH
+		if (i1 == -2){//if body1 is the pickup
+		if (i2 == 0){
+			body1->SetUserData((void*)-100);//Collect the pickup
+			body2->SetUserData((void*)-400);//player gets water
 		}
 	}
-	if(i1 == 0){
-		if(i2 == -8){      
-			body1->SetUserData((void*)-300);
+	if (i1 == 0){
+		if (i2 == -2){//if body2 is the pickup  
+			body1->SetUserData((void*)-400);//player gets water
+			body2->SetUserData((void*)-100);//Collect the pickup	
 		}
 	}
-#pragma endregion
-
-#pragma region BOMB-LIFTPLATFORM
-	if(i1 == -5 || i1 == -200){
-		if(i2 == -1){          
-			body2->SetUserData((void*)-100);
-		}
-	}
-	if(i1 == -1){
-		if(i2 == -5 || i2 == -200){      
-			body1->SetUserData((void*)-100);
-		}
-	}
-#pragma endregion
-
-#pragma region BOMBANDBARRIER-FALLINGPLATFORM
-	if(i1 == -7){
-		if(i2 == -1 || i2 == -3){
-				body1->SetUserData((void*)-300); //hold the platform
-				body2->SetUserData((void*)-100); //Destroy the bomb
-		}
-	}
-	if(i1 == -1 || i1 == -3){
-		if(i2 == -7){
-			body1->SetUserData((void*)-100); //Destroy the bomb
-			body2->SetUserData((void*)-300); //hold the platform
-		}
-	}
-#pragma endregion
-#
 }
+#pragma endregion
 
 void ContactListener::EndContact(b2Contact* contact){
 
