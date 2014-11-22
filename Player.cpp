@@ -13,7 +13,7 @@ Player::Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float r
 	m_fixtureDef.shape = &m_shape;
 	m_fixtureDef.filter.groupIndex = -1;
 	m_body->CreateFixture(&m_fixtureDef);
-
+	m_speed = .3;
 	m_texture.loadFromFile("Player.png", gRenderer);
 }
 
@@ -25,43 +25,38 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 
 void Player::Update() {
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
-		if (m_body->GetContactList()) {
-			m_body->ApplyForceToCenter(b2Vec2(10, 0), true);
-		}
-		else {
-			m_body->ApplyForceToCenter(b2Vec2(5, 0), true);
-		}
+			m_body->SetAngularVelocity(-.2);
 	}
 	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::A)) {
-		if (m_body->GetContactList()) {
-			m_body->SetLinearVelocity(b2Vec2(-10, m_body->GetLinearVelocity().y));
-		}
-		else {
-			m_body->ApplyForceToCenter(b2Vec2(-5, 0), true);
-		}
+			m_body->SetAngularVelocity(.2);
 	}
-	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::W)) {
-		if (m_body->GetContactList()) {
-			m_body->ApplyForceToCenter(b2Vec2(0, 10), true);
-		}
-		else {
-			m_body->ApplyForceToCenter(b2Vec2(-5, 0), true);
-		}
+	else{
+		m_body->SetAngularVelocity(0);
+	}
+	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::W)) {
+		m_angle = m_body->GetAngle();
+
+		m_velocity.x = ((float)sin(m_angle) * -m_speed);
+		m_velocity.y = ((float)cos(m_angle) * m_speed);
+
+		m_body->ApplyForceToCenter(m_velocity, true);
 	}
 	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::S)) {
-		if (m_body->GetContactList()) {
-			m_body->ApplyForceToCenter(b2Vec2(0,-10), true);
-		}
-		else {
-			m_body->ApplyForceToCenter(b2Vec2(-5, 0), true);
-		}
-	}
+		m_angle = m_body->GetAngle();
 
+		m_velocity.x = ((float)sin(m_angle) * m_speed);
+		m_velocity.y = ((float)cos(m_angle) * -m_speed);
+
+		m_body->ApplyForceToCenter(m_velocity, true);
+	}
+	else
+	{
+		m_body->SetLinearVelocity(b2Vec2(0,0));
+	}
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::SPACE)) {
-		if (m_body->GetContactList() && !isSpaceDown) {
-			m_body->ApplyLinearImpulse(b2Vec2(0, 12.5), m_body->GetPosition(), true);
+		
+			//FireCannon()
 			isSpaceDown = true;
-		}
 	}
 	else { isSpaceDown = false; }
 }

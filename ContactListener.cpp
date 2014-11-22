@@ -3,6 +3,7 @@
 
 ContactListener* ContactListener::instance;
 b2World* ContactListener::mWorld;
+
 ContactListener* ContactListener::getListener(){
 	if(instance == NULL){
 		instance = new ContactListener();
@@ -32,7 +33,6 @@ void ContactListener::BeginContact(b2Contact* contact){
 	//------------------------------
 	//-100 = to be destroyed
 	//-200 = dynamic event
-	//-300 = conveyor belt
 
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
