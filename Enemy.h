@@ -4,6 +4,9 @@
 #include "Box2D/Box2D.h"
 #include "LTexture.h"
 #include "KeyboardManager.h"
+#include "CannonBall.h"
+#include <vector>
+
 class Enemy
 {
 public:
@@ -24,6 +27,7 @@ private:
 	b2Timer timer;
 	b2World* m_world;
 	SDL_Renderer* gRenderer;
+	std::vector<CannonBall*> cannonBalls;
 };
 
 #endif

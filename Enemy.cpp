@@ -3,7 +3,6 @@
 #define TORADIANS (-180/3.1415926536f)
 
 #include "Enemy.h"
-#include "CannonBall.h"
 
 Enemy::Enemy(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, float radius) : m_world(theWorld), gRenderer(theRenderer)
 {
@@ -31,7 +30,7 @@ void Enemy::Draw(SDL_Renderer* gRenderer, b2Vec2 offset)
 void Enemy::Update(b2Vec2 playerPosition)
 {
 	int fireRadius = 10;
-	if(dynamicBody->GetPosition().x - playerPosition.x > fireRadius)
+	if( b2Distance(playerPosition, dynamicBody->GetPosition()) > fireRadius)
 	{
 		float rotationAngle = TORADIANS*(atan2(-playerPosition.x, playerPosition.y));
 		dynamicBody->SetTransform( dynamicBody->GetPosition(), rotationAngle );
@@ -49,7 +48,8 @@ void Enemy::Update(b2Vec2 playerPosition)
 		dynamicBody->SetTransform( dynamicBody->GetPosition(), 90 );
 		if(timer.GetMilliseconds() >1000)
 		{
-			CannonBall* cannonBall = new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50);
+			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50));
+			timer.Reset();
 		}
 	}
 }
