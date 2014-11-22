@@ -10,13 +10,10 @@
 #include <vector>
 #include "ContactListener.h"
 #include "CONSTANTS.h"
-
-#include "Island.h"
-
-#include "Enemy.h"
 #include "Level.h"
 #include "Player.h"
-#include "AudioManager.h"
+
+Player* p;
 
 Level* lvl;
 
@@ -34,9 +31,7 @@ SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
 
-Enemy *enemy;
-Player *p;
-Island *m_island;
+
 
 void SetupWorld() {
 	b2Vec2 gravity(0, 0);
@@ -54,36 +49,23 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
-
-	m_island = new Island(90,90,0,1,gRenderer,m_world);
-	AudioManager::getAudioManager()->playBackgroundMusic();
-
-
 	lvl = new Level();
-	enemy = new Enemy(m_world, gRenderer, b2Vec2(1000, 1000), 40);
-
+	
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
 	lvl->Initialize(m_world, gRenderer,p);
 }
 
 void DrawEntities() {
-
-	SDL_SetRenderDrawColor( gRenderer, 0, 0, 200, 1 );
+	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( gRenderer );
+
 	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
-
-	m_island->Draw(gRenderer,offset);
-	enemy->Draw( gRenderer, offset );	
-
 
 	lvl->Draw(gRenderer, offset);
 	p->Draw(gRenderer, offset);
 	
-
 	SDL_RenderPresent(gRenderer);
 }
-
-
 
 void Quit() {
 	SDL_DestroyWindow(window);
@@ -95,7 +77,7 @@ void Quit() {
 
 void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
-	m_island->Update();
+
 	DrawEntities();
 
 	p->Update();

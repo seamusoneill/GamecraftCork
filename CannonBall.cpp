@@ -4,10 +4,10 @@
 
 #include "CannonBall.h"
 
-CannonBall::CannonBall(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius)
+CannonBall::CannonBall(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius, b2Vec2 direction)
 {
 	myBodyDef.type = b2_dynamicBody;
-	myBodyDef.position.Set(position.x * PIXELSTOMETRES, -position.y * PIXELSTOMETRES);
+	myBodyDef.position.Set(position.x, position.y);
 	myBodyDef.userData = (void*)0;
 	myBodyDef.angularDamping = 2;
 	dynamicBody = world->CreateBody(&myBodyDef);
@@ -16,6 +16,8 @@ CannonBall::CannonBall(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,
 	fixtureDef.filter.groupIndex = -1;
 	fixtureDef.density = 0.1;
 	dynamicBody->CreateFixture(&fixtureDef);
+
+	dynamicBody->SetLinearVelocity(direction);
 
 	texture.loadFromFile( "CannonBall.png", gRenderer );
 }

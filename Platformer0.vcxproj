@@ -134,15 +134,16 @@
     <ClCompile Include="Box2D\Particle\b2VoronoiDiagram.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="CannonBall.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="hudDisplay.cpp" />
+    <ClCompile Include="Island.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="PickUp.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Island.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
@@ -207,16 +208,18 @@
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
     <ClInclude Include="CannonBall.h" />
     <ClInclude Include="CONSTANTS.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="hudDisplay.h" />
+    <ClInclude Include="Island.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="PickUp.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Island.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
@@ -226,7 +229,6 @@
     <None Include="Heart.png" />
     <None Include="Island.png" />
     <None Include="PirateShip.png" />
-    <None Include="Platformer0.sdf" />
     <None Include="Player.png" />
     <None Include="README.md" />
     <None Include="WaterBucket.png" />

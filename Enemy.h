@@ -4,6 +4,9 @@
 #include "Box2D/Box2D.h"
 #include "LTexture.h"
 #include "KeyboardManager.h"
+#include "CannonBall.h"
+#include <vector>
+
 class Enemy
 {
 public:
@@ -12,6 +15,7 @@ public:
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset );
 	void Update(b2Vec2 playerPosition);
 	b2Vec2 GetPosition();
+	std::vector<CannonBall*> cannonBalls;
 
 private:
 	b2BodyDef myBodyDef;
