@@ -42,6 +42,7 @@ private:
 
 	void FireCannon();
 	b2Timer timer;
+	b2Timer thirstTimer;
 	b2World* m_world;
 	SDL_Renderer* gRenderer;
 };

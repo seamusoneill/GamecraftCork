@@ -66,6 +66,7 @@ void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity)
 			direction *= PIXELSTOMETRES * 750.0f;
 
 			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition(), 50, direction));
+
 			timer.Reset();
 		}
 	}

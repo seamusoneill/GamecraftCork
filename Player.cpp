@@ -15,6 +15,7 @@ Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, fl
 	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
 	m_health = 3;
+	m_thirst = 60;
 	isAlive = true;
 }
 
@@ -72,7 +73,16 @@ void Player::Update() {
 
 	 Collision();//check collision with pickups
 
+	 if(thirstTimer.GetMilliseconds() > 1000)
+	 {
+		 m_thirst--;
+		 thirstTimer.Reset();
+	 }
 
+	 if(m_thirst <= 0)
+	 {
+		 m_health = 0;
+	 }
 }
 
 void Player::Collision(){
@@ -83,7 +93,7 @@ void Player::Collision(){
 	}
 	else if((int)m_body->GetUserData() == -400){
 		if(m_thirst<3){
-			m_thirst++;
+			m_thirst = 60;
 		}
 	}
 	else if((int)m_body->GetUserData() == -100){
