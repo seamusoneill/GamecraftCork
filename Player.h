@@ -19,6 +19,12 @@ private:
 	b2Fixture* m_fixture;
 	b2FixtureDef m_fixtureDef;
 	LTexture m_texture;
+
+	int m_health;
+	int m_ammo;
+	int m_thirst;
+
+	bool isAlive;
 	bool isSpaceDown;
 };
 

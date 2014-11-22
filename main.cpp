@@ -28,6 +28,8 @@ int32 positionIterations = 3;
 SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
+//Background
+LTexture m_background;
 
 void SetupWorld() {
 	b2Vec2 gravity(0, 0);
@@ -47,6 +49,9 @@ void Initialize()
 	SetupSDL();
 
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
+
+	m_background.loadFromFile("background.png", gRenderer);
+
 }
 
 void DrawEntities() {
@@ -55,8 +60,10 @@ void DrawEntities() {
 	SDL_RenderClear(gRenderer);
 
 	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
-
+	
+	m_background.render(0, 0, NULL, 0, 0, SDL_FLIP_NONE, gRenderer);
 	p->Draw(gRenderer, offset);
+	
 	SDL_RenderPresent(gRenderer);
 }
 
@@ -72,6 +79,8 @@ void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
 
 	DrawEntities();
+
+	p->Update();
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();

@@ -34,7 +34,23 @@ void Player::Update() {
 	}
 	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::A)) {
 		if (m_body->GetContactList()) {
-			m_body->ApplyForceToCenter(b2Vec2(-10, 0), true);
+			m_body->SetLinearVelocity(b2Vec2(-10, m_body->GetLinearVelocity().y));
+		}
+		else {
+			m_body->ApplyForceToCenter(b2Vec2(-5, 0), true);
+		}
+	}
+	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::W)) {
+		if (m_body->GetContactList()) {
+			m_body->ApplyForceToCenter(b2Vec2(0, 10), true);
+		}
+		else {
+			m_body->ApplyForceToCenter(b2Vec2(-5, 0), true);
+		}
+	}
+	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::S)) {
+		if (m_body->GetContactList()) {
+			m_body->ApplyForceToCenter(b2Vec2(0,-10), true);
 		}
 		else {
 			m_body->ApplyForceToCenter(b2Vec2(-5, 0), true);
