@@ -13,6 +13,7 @@ public:
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset);
 	void Update();
 	b2Vec2 GetPosition();
+	void Collision();
 
 private:
 	b2BodyDef m_bodyDef;

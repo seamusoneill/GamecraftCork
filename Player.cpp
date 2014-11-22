@@ -58,6 +58,24 @@ void Player::Update() {
 		isSpaceDown = true;
 	}
 	else { isSpaceDown = false; }
+
+	void Collision();//check collision with pickups
+}
+
+void Player::Collision(){
+	if(m_body->GetUserData() == -200){
+		if(m_health<3){
+			m_health++;
+		}
+	}
+	else if(m_body->GetUserData() == -400){
+		if(m_thirst<3){
+			m_thirst++;
+		}
+	}
+
+	m_body->SetUserData((void*)0);
+
 }
 
 b2Vec2 Player::GetPosition() {
