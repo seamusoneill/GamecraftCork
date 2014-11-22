@@ -33,6 +33,9 @@ private:
 	bool isSpaceDown;
 
 	void FireCannon();
+
+	int GetHealth();
+	int GetThirst();
 };
 
 #endif
