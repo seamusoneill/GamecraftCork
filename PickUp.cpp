@@ -24,6 +24,7 @@ PickUp::PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool i
 	m_Body = world->CreateBody(&myBodyDef);
 	polyShape.SetAsBox(mTexture.getWidth()/2*PIXELSTOMETRES, mTexture.getHeight()/2*PIXELSTOMETRES);
 	fixtureDef.shape = &polyShape;
+	fixtureDef.filter.groupIndex = -1;
 	m_Body->CreateFixture(&fixtureDef);
 }
 
@@ -35,10 +36,11 @@ void PickUp::Draw(SDL_Renderer* renderer, b2Vec2 offset){
 }
 
 
-void PickUp::Collected(b2World* world){
-	if(myBodyDef.userData == (void*)-100){
-	m_alive = false;
-	world->DestroyBody(m_Body);
+void PickUp::Update(){
+	if((int)m_Body->GetUserData() == -100){
+		m_alive = false;
+		m_Body->GetWorld()->DestroyBody(m_Body);
+		m_Body->SetUserData((void*)-2);
 	}
 }
 

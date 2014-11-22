@@ -23,7 +23,10 @@ private:
 	HealthIcon *Health[3];
 	HealthIcon *Thirst[3];
 
-	
+
+	LTexture mHealthTexture;
+	LTexture mThurstTexture;
+
 };
 
 #endif

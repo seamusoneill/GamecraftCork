@@ -11,7 +11,6 @@ Player::Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float r
 	m_body = world->CreateBody(&m_bodyDef);
 	m_shape.SetAsBox(radius / 2 * PIXELSTOMETRES, radius / 2 * PIXELSTOMETRES);
 	m_fixtureDef.shape = &m_shape;
-	m_fixtureDef.filter.groupIndex = -1;
 	m_body->CreateFixture(&m_fixtureDef);
 	m_speed = .3;
 	m_texture.loadFromFile("Player.png", gRenderer);
