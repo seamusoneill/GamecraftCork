@@ -4,6 +4,7 @@
 #include "PickUp.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "CONSTANTS.h"
 #include <vector>
 
 class Level{

@@ -55,12 +55,11 @@ void Initialize()
 	lvl->Initialize(m_world, gRenderer,p);
 }
 
-void DrawEntities() {
+void DrawEntities(b2Vec2 offset) {
 	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	SDL_RenderClear( gRenderer );
 
-	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
-
+	
 	lvl->Draw(gRenderer, offset);
 	p->Draw(gRenderer, offset);
 	
@@ -77,9 +76,30 @@ void Quit() {
 
 void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
+	
+	
+	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
-	DrawEntities();
-
+	if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
+	{
+		offset.x = -CONSTANTS::LEVEL_WIDTH / 2;
+	}
+	if (p->GetPosition().x > CONSTANTS::LEVEL_WIDTH/120)
+	{
+		offset.x = -CONSTANTS::LEVEL_WIDTH / 60;
+	}
+	//Bottom Screen
+	if (p->GetPosition().y < -CONSTANTS::LEVEL_HEIGHT/ 60 + 11.5)
+	{
+		offset.y = -CONSTANTS::LEVEL_HEIGHT / 5;
+	}
+	//Top screen
+	if (p->GetPosition().y > CONSTANTS::LEVEL_HEIGHT / 60 - 11.5)
+	{
+		offset.y = CONSTANTS::LEVEL_HEIGHT / 2;
+	}
+	b2Vec2 m_position = p->GetPosition();
+	DrawEntities(offset);
 	p->Update();
 	lvl->Update();
 

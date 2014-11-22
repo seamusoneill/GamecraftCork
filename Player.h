@@ -13,7 +13,9 @@ public:
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset);
 	void Update();
 	b2Vec2 GetPosition();
-
+	
+	int GetHealth();
+	int GetThirst();
 private:
 	b2BodyDef m_bodyDef;
 	b2Body* m_body;
@@ -33,9 +35,6 @@ private:
 	bool isSpaceDown;
 
 	void FireCannon();
-
-	int GetHealth();
-	int GetThirst();
 };
 
 #endif
