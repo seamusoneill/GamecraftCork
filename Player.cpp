@@ -4,22 +4,32 @@
 
 #include "Player.h"
 
-Player::Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius) : isSpaceDown(false) {
+Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, float radius) : isSpaceDown(false), m_world(theWorld), gRenderer(theRenderer) {
 	m_bodyDef.type = b2_dynamicBody;
 	m_bodyDef.position.Set(position.x * PIXELSTOMETRES, -position.y * PIXELSTOMETRES);
 	m_bodyDef.userData = (void*)0;
-	m_body = world->CreateBody(&m_bodyDef);
+	m_body = m_world->CreateBody(&m_bodyDef);
 	m_shape.SetAsBox(radius / 2 * PIXELSTOMETRES, radius / 2 * PIXELSTOMETRES);
 	m_fixtureDef.shape = &m_shape;
 	m_body->CreateFixture(&m_fixtureDef);
 	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
+	m_health = 3;
 }
 
 void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
-	m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
-		-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + offset.y,
-		NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer);
+
+		if(m_health<=0){
+			//Remove the player Image from the game and replace it with the game over screen
+				m_texture.loadFromFile("GameOver.png", gRenderer);
+				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
+	
+		}
+		else{
+			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
+				-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + offset.y,
+				NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer);
+		}
 }
 
 void Player::Update() {
@@ -59,7 +69,9 @@ void Player::Update() {
 	}
 	else { isSpaceDown = false; }
 
-	void Collision();//check collision with pickups
+	 Collision();//check collision with pickups
+
+
 }
 
 void Player::Collision(){
@@ -72,6 +84,10 @@ void Player::Collision(){
 		if(m_thirst<3){
 			m_thirst++;
 		}
+	}
+	else if((int)m_body->GetUserData() == -100){
+			m_health--;
+		
 	}
 
 	m_body->SetUserData((void*)0);
@@ -96,4 +112,10 @@ int Player::GetThirst(){
 
 void Player::FireCannon()
 {
+	if(timer.GetMilliseconds() >500)
+	{
+		b2Vec2 direction = m_body->GetWorldVector(b2Vec2(0,1));
+		cannonBalls.push_back(new CannonBall(m_world, gRenderer, m_body->GetPosition()+direction*2.1, 50, direction*10));
+		timer.Reset();
+	}
 }
