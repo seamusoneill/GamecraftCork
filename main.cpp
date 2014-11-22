@@ -11,10 +11,11 @@
 #include "ContactListener.h"
 #include "CONSTANTS.h"
 
-#include "World.h"
+#include "Island.h"
 
 #include "Enemy.h"
 #include "Player.h"
+#include "AudioManager.h"
 
 //Program Variables
 bool isRunning = true;
@@ -32,7 +33,7 @@ SDL_Event e;
 //Background
 LTexture m_background;
 
-World m_gameWorld;
+Island m_winPoint;
 
 void SetupWorld() {
 	b2Vec2 gravity(0, 0);
@@ -50,7 +51,8 @@ void Initialize()
 {
 	SetupWorld();
 	SetupSDL();
-	m_gameWorld.Initialize(m_world,gRenderer);
+	m_winPoint = Island(90,90,0,1,gRenderer,m_world);
+	AudioManager::getAudioManager()->playBackgroundMusic();
 }
 
 void DrawEntities() {
@@ -73,7 +75,7 @@ void Quit() {
 
 void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
-	m_gameWorld.Update();
+	m_winPoint.Update();
 	DrawEntities();
 
 
