@@ -19,12 +19,18 @@ public:
 	std::vector<CannonBall*> cannonBalls;
 
 private:
+	b2World* mWorld;
+
+
 	b2BodyDef myBodyDef;
 	b2Body* dynamicBody;
 	b2CircleShape circleShape;
 	b2Fixture* mFix;
 	b2FixtureDef fixtureDef;
+
 	LTexture texture;
+	LTexture deadTexture;
+
 	b2Vec2 orientation;
 	b2Timer timer;
 	b2World* m_world;

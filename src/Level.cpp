@@ -10,6 +10,11 @@ void Level::Initialize(b2World* w, SDL_Renderer* r, Player* p)
 	m_player = p;
 	m_island = new Island(900, 300, 0, 1, r, w);
 	m_enemies.push_back(new Enemy(w, r, b2Vec2(600, 300), 50));
+	m_enemies.push_back(new Enemy(w, r, b2Vec2(0, 300), 50));
+	m_enemies.push_back(new Enemy(w, r, b2Vec2(600, 0), 50));
+	m_enemies.push_back(new Enemy(w, r, b2Vec2(0, 0), 50));
+
+
 	m_pickups.push_back(new PickUp(w, r, b2Vec2(100, 100), true));
 }
 
@@ -17,7 +22,8 @@ void Level::Update(){
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Update(m_player->GetPosition(), m_player->GetVelocity());
+		if(m_enemies[i]->GetAlive())
+			m_enemies[i]->Update(m_player->GetPosition(), m_player->GetVelocity());
 	}
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
@@ -32,6 +38,7 @@ void Level::Draw(SDL_Renderer* r, b2Vec2 offset)
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		m_enemies[i]->Draw(r, offset);
+
 		for (int j = 0; j < m_enemies[i]->cannonBalls.size(); j++)
 		{
 			m_enemies[i]->cannonBalls[j]->Draw(r, offset);

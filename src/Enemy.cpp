@@ -21,13 +21,22 @@ Enemy::Enemy(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, floa
 	dynamicBody->CreateFixture(&fixtureDef);
 	m_alive = true;
 	texture.loadFromFile( "PirateShip.png", gRenderer );
+	deadTexture.loadFromFile("PirateShipDead.png", gRenderer);
+}
+
+Enemy::~Enemy()
+{
+	m_world->DestroyBody(dynamicBody);
 }
 
 void Enemy::Draw(SDL_Renderer* gRenderer, b2Vec2 offset)
 {
-	texture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (texture.getWidth() / 2) - offset.x, 
-		-(dynamicBody->GetPosition().y * METRESTOPIXELS) - (texture.getWidth() / 2) + offset.y, 
-		NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+	if(m_alive){
+		texture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (texture.getWidth() / 2) - offset.x, -(dynamicBody->GetPosition().y * METRESTOPIXELS) - (texture.getWidth() / 2) + offset.y, NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+	}
+	if(!m_alive){
+		deadTexture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) - offset.x, -(dynamicBody->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) + offset.y, NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+	}
 }
 
 void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity)
@@ -66,11 +75,8 @@ void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity)
 		{
 			b2Vec2 direction = playerPosition - dynamicBody->GetPosition();
 			direction.Normalize();
-			direction *= PIXELSTOMETRES * 750.0f;
-
 			AudioManager::getInstance()->playCannon();
-			direction = dynamicBody->GetWorldVector(b2Vec2(1,0));
-			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition()+direction*2.5, 50, direction*10));
+			cannonBalls.push_back(new CannonBall(m_world, gRenderer, dynamicBody->GetPosition()+direction*3.5, 50, direction*10));
 			timer.Reset();
 		}
 	}
@@ -78,6 +84,7 @@ void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity)
 	if((int)dynamicBody->GetUserData() == -100)
 	{
 		m_alive = false;
+		dynamicBody->SetLinearVelocity(dynamicBody->GetLinearVelocity()*0.02);
 	}
 }
 

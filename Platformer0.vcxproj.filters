@@ -164,4 +164,7 @@
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="YouWin.png" />
+  </ItemGroup>
 </Project>

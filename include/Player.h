@@ -39,7 +39,7 @@ private:
 
 	bool isAlive;
 	bool isSpaceDown;
-
+	LTexture deadTexture;
 	void FireCannon();
 	b2Timer timer;
 	b2Timer thirstTimer;

@@ -16,6 +16,7 @@ Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, fl
 	m_body->CreateFixture(&m_fixtureDef);
 	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
+	deadTexture.loadFromFile("PlayerDead.png", gRenderer);
 	m_health = 3;
 	m_thirst = 60;
 	isAlive = true;
@@ -28,6 +29,7 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 				m_texture.loadFromFile("GameOver.png", gRenderer);
 				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
 				isAlive = false;
+				deadTexture.render((m_body->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) - offset.x, -(m_body->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) + offset.y, NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 		}
 		else{
 			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
@@ -37,57 +39,59 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 }
 
 void Player::Update() {
-
-	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
+	if(isAlive){
+		if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
 			m_body->SetAngularVelocity(-.9);
-	}
-	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::A)) {
+		}
+		else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::A)) {
 			m_body->SetAngularVelocity(.9);
-	}
-	else{
-		m_body->SetAngularVelocity(0);
-	}
-	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::W)) {
-		m_angle = m_body->GetAngle();
+		}
+		else{
+			m_body->SetAngularVelocity(0);
+		}
+		if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::W)) {
+			m_angle = m_body->GetAngle();
 
-		m_velocity.x = ((float)sin(m_angle) * -m_speed);
-		m_velocity.y = ((float)cos(m_angle) * m_speed);
+			m_velocity.x = ((float)sin(m_angle) * -m_speed);
+			m_velocity.y = ((float)cos(m_angle) * m_speed);
+			m_body->ApplyForceToCenter(m_velocity, true);
+		}
+		else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::S)) {
+			m_angle = m_body->GetAngle();
 
+			m_velocity.x = ((float)sin(m_angle) * m_speed);
+			m_velocity.y = ((float)cos(m_angle) * -m_speed);
+	
+			m_body->ApplyForceToCenter(m_velocity, true);
+		}
+		else
+		{
+			m_body->SetLinearVelocity(b2Vec2(0,0));
+		}
+		if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::SPACE))
+		{
+			FireCannon();
+			isSpaceDown = true;
+		}
+		else { isSpaceDown = false; }
 
+		Collision();//check collision with pickups
 
-		m_body->ApplyForceToCenter(m_velocity, true);
-	}
-	else if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::S)) {
-		m_angle = m_body->GetAngle();
+		if(thirstTimer.GetMilliseconds() > 1000)
+		{
+			 m_thirst--;
+			thirstTimer.Reset();
+		}
 
-		m_velocity.x = ((float)sin(m_angle) * m_speed);
-		m_velocity.y = ((float)cos(m_angle) * -m_speed);
-
-		m_body->ApplyForceToCenter(m_velocity, true);
+		if(m_thirst <= 0)
+		{
+			 m_health = 0;
+		}
 	}
 	else
 	{
-		m_body->SetLinearVelocity(b2Vec2(0,0));
+		m_body->SetLinearVelocity(m_body->GetLinearVelocity()*0.02);
 	}
-	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::SPACE))
-	{
-		FireCannon();
-		isSpaceDown = true;
-	}
-	else { isSpaceDown = false; }
-
-	 Collision();//check collision with pickups
-
-	 if(thirstTimer.GetMilliseconds() > 1000)
-	 {
-		 m_thirst--;
-		 thirstTimer.Reset();
-	 }
-
-	 if(m_thirst <= 0)
-	 {
-		 m_health = 0;
-	 }
 }
 
 void Player::Collision(){
