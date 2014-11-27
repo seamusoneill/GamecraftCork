@@ -143,6 +143,7 @@
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="MultiThreading.cpp" />
     <ClCompile Include="PickUp.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
@@ -217,6 +218,7 @@
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="MultiThreading.h" />
     <ClInclude Include="PickUp.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
@@ -226,7 +228,9 @@
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
     <None Include="Bullet.png" />
+    <None Include="cannon.wav" />
     <None Include="CannonBall.png" />
+    <None Include="crack.wav" />
     <None Include="Drop.png" />
     <None Include="GameOver.png" />
     <None Include="Heart.png" />
