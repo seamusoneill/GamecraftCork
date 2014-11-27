@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -78,7 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="Box2D\Collision\b2CollideCircle.cpp" />
     <ClCompile Include="Box2D\Collision\b2CollideEdge.cpp" />
@@ -133,21 +132,21 @@
     <ClCompile Include="Box2D\Particle\b2ParticleSystem.cpp" />
     <ClCompile Include="Box2D\Particle\b2VoronoiDiagram.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="CannonBall.cpp" />
-    <ClCompile Include="HealthIcon.cpp" />
-    <ClCompile Include="hudDisplay.cpp" />
-    <ClCompile Include="Island.cpp" />
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LTexture.cpp" />
-    <ClCompile Include="ContactListener.cpp" />
-    <ClCompile Include="KeyboardManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="PickUp.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="src\AudioManager.cpp" />
+    <ClCompile Include="src\CannonBall.cpp" />
+    <ClCompile Include="src\ContactListener.cpp" />
+    <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="src\HealthIcon.cpp" />
+    <ClCompile Include="src\hudDisplay.cpp" />
+    <ClCompile Include="src\Island.cpp" />
+    <ClCompile Include="src\KeyboardManager.cpp" />
+    <ClCompile Include="src\Level.cpp" />
+    <ClCompile Include="src\LTexture.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PickUp.cpp" />
+    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Box2D\Box2D.h" />
     <ClInclude Include="Box2D\Collision\b2BroadPhase.h" />
     <ClInclude Include="Box2D\Collision\b2Collision.h" />
@@ -207,18 +206,19 @@
     <ClInclude Include="Box2D\Particle\b2StackQueue.h" />
     <ClInclude Include="Box2D\Particle\b2VoronoiDiagram.h" />
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
-    <ClInclude Include="CannonBall.h" />
-    <ClInclude Include="CONSTANTS.h" />
-    <ClInclude Include="HealthIcon.h" />
-    <ClInclude Include="hudDisplay.h" />
-    <ClInclude Include="Island.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LTexture.h" />
-    <ClInclude Include="ContactListener.h" />
-    <ClInclude Include="KeyboardManager.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="PickUp.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="include\AudioManager.h" />
+    <ClInclude Include="include\CannonBall.h" />
+    <ClInclude Include="include\CONSTANTS.h" />
+    <ClInclude Include="include\ContactListener.h" />
+    <ClInclude Include="include\Enemy.h" />
+    <ClInclude Include="include\HealthIcon.h" />
+    <ClInclude Include="include\hudDisplay.h" />
+    <ClInclude Include="include\Island.h" />
+    <ClInclude Include="include\KeyboardManager.h" />
+    <ClInclude Include="include\Level.h" />
+    <ClInclude Include="include\LTexture.h" />
+    <ClInclude Include="include\PickUp.h" />
+    <ClInclude Include="include\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

@@ -15,10 +15,13 @@
     <ClCompile Include="Box2D\Collision\Shapes\b2PolygonShape.cpp" />
     <ClCompile Include="Box2D\Common\b2BlockAllocator.cpp" />
     <ClCompile Include="Box2D\Common\b2Draw.cpp" />
+    <ClCompile Include="Box2D\Common\b2FreeList.cpp" />
     <ClCompile Include="Box2D\Common\b2Math.cpp" />
     <ClCompile Include="Box2D\Common\b2Settings.cpp" />
     <ClCompile Include="Box2D\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="Box2D\Common\b2Stat.cpp" />
     <ClCompile Include="Box2D\Common\b2Timer.cpp" />
+    <ClCompile Include="Box2D\Common\b2TrackedBlock.cpp" />
     <ClCompile Include="Box2D\Dynamics\b2Body.cpp" />
     <ClCompile Include="Box2D\Dynamics\b2ContactManager.cpp" />
     <ClCompile Include="Box2D\Dynamics\b2Fixture.cpp" />
@@ -46,31 +49,25 @@
     <ClCompile Include="Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
     <ClCompile Include="Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
     <ClCompile Include="Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
-    <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="ContactListener.cpp" />
-    <ClCompile Include="KeyboardManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="Box2D\Particle\b2Particle.cpp" />
     <ClCompile Include="Box2D\Particle\b2ParticleAssembly.cpp" />
     <ClCompile Include="Box2D\Particle\b2ParticleGroup.cpp" />
     <ClCompile Include="Box2D\Particle\b2ParticleSystem.cpp" />
     <ClCompile Include="Box2D\Particle\b2VoronoiDiagram.cpp" />
-    <ClCompile Include="Box2D\Common\b2FreeList.cpp" />
-    <ClCompile Include="Box2D\Common\b2Stat.cpp" />
-    <ClCompile Include="Box2D\Common\b2TrackedBlock.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="PickUp.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="CannonBall.cpp" />
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="hudDisplay.cpp" />
-    <ClCompile Include="AudioManager.cpp" />
-    <ClCompile Include="Island.cpp" />
-<<<<<<< HEAD
-=======
-    <ClCompile Include="HealthIcon.cpp" />
->>>>>>> 484dc9436b90534883e629d5260439bbe6eb04b0
+    <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
+    <ClCompile Include="src\AudioManager.cpp" />
+    <ClCompile Include="src\CannonBall.cpp" />
+    <ClCompile Include="src\ContactListener.cpp" />
+    <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="src\HealthIcon.cpp" />
+    <ClCompile Include="src\hudDisplay.cpp" />
+    <ClCompile Include="src\Island.cpp" />
+    <ClCompile Include="src\KeyboardManager.cpp" />
+    <ClCompile Include="src\Level.cpp" />
+    <ClCompile Include="src\LTexture.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PickUp.cpp" />
+    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -86,11 +83,17 @@
     <ClInclude Include="Box2D\Collision\Shapes\b2Shape.h" />
     <ClInclude Include="Box2D\Common\b2BlockAllocator.h" />
     <ClInclude Include="Box2D\Common\b2Draw.h" />
+    <ClInclude Include="Box2D\Common\b2FreeList.h" />
+    <ClInclude Include="Box2D\Common\b2GrowableBuffer.h" />
     <ClInclude Include="Box2D\Common\b2GrowableStack.h" />
+    <ClInclude Include="Box2D\Common\b2IntrusiveList.h" />
     <ClInclude Include="Box2D\Common\b2Math.h" />
     <ClInclude Include="Box2D\Common\b2Settings.h" />
+    <ClInclude Include="Box2D\Common\b2SlabAllocator.h" />
     <ClInclude Include="Box2D\Common\b2StackAllocator.h" />
+    <ClInclude Include="Box2D\Common\b2Stat.h" />
     <ClInclude Include="Box2D\Common\b2Timer.h" />
+    <ClInclude Include="Box2D\Common\b2TrackedBlock.h" />
     <ClInclude Include="Box2D\Dynamics\b2Body.h" />
     <ClInclude Include="Box2D\Dynamics\b2ContactManager.h" />
     <ClInclude Include="Box2D\Dynamics\b2Fixture.h" />
@@ -119,58 +122,44 @@
     <ClInclude Include="Box2D\Dynamics\Joints\b2RopeJoint.h" />
     <ClInclude Include="Box2D\Dynamics\Joints\b2WeldJoint.h" />
     <ClInclude Include="Box2D\Dynamics\Joints\b2WheelJoint.h" />
-    <ClInclude Include="Box2D\Rope\b2Rope.h" />
-    <ClInclude Include="ContactListener.h" />
-    <ClInclude Include="KeyboardManager.h" />
-    <ClInclude Include="LTexture.h" />
-    <ClInclude Include="Box2D\Particle\b2VoronoiDiagram.h" />
     <ClInclude Include="Box2D\Particle\b2Particle.h" />
     <ClInclude Include="Box2D\Particle\b2ParticleAssembly.h" />
     <ClInclude Include="Box2D\Particle\b2ParticleGroup.h" />
     <ClInclude Include="Box2D\Particle\b2ParticleSystem.h" />
     <ClInclude Include="Box2D\Particle\b2StackQueue.h" />
-    <ClInclude Include="Box2D\Common\b2FreeList.h" />
-    <ClInclude Include="Box2D\Common\b2GrowableBuffer.h" />
-    <ClInclude Include="Box2D\Common\b2IntrusiveList.h" />
-    <ClInclude Include="Box2D\Common\b2SlabAllocator.h" />
-    <ClInclude Include="Box2D\Common\b2Stat.h" />
-    <ClInclude Include="Box2D\Common\b2TrackedBlock.h" />
-    <ClInclude Include="CONSTANTS.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="PickUp.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="CannonBall.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="hudDisplay.h" />
-    <ClInclude Include="AudioManager.h" />
-    <ClInclude Include="Island.h" />
-<<<<<<< HEAD
-=======
-    <ClInclude Include="HealthIcon.h" />
->>>>>>> 484dc9436b90534883e629d5260439bbe6eb04b0
+    <ClInclude Include="Box2D\Particle\b2VoronoiDiagram.h" />
+    <ClInclude Include="Box2D\Rope\b2Rope.h" />
+    <ClInclude Include="include\AudioManager.h" />
+    <ClInclude Include="include\CannonBall.h" />
+    <ClInclude Include="include\CONSTANTS.h" />
+    <ClInclude Include="include\ContactListener.h" />
+    <ClInclude Include="include\Enemy.h" />
+    <ClInclude Include="include\HealthIcon.h" />
+    <ClInclude Include="include\hudDisplay.h" />
+    <ClInclude Include="include\Island.h" />
+    <ClInclude Include="include\KeyboardManager.h" />
+    <ClInclude Include="include\Level.h" />
+    <ClInclude Include="include\LTexture.h" />
+    <ClInclude Include="include\PickUp.h" />
+    <ClInclude Include="include\Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="background.png" />
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
-    <None Include="WaterBucket.png" />
-    <None Include="Wiskey.png" />
+    <None Include="Bullet.png" />
+    <None Include="CannonBall.png" />
+    <None Include="Drop.png" />
+    <None Include="GameOver.png" />
+    <None Include="Heart.png" />
+    <None Include="Island.png" />
     <None Include="PirateShip.png" />
     <None Include="Player.png" />
     <None Include="README.md" />
-    <None Include="background.png" />
-    <None Include="CannonBall.png" />
-    <None Include="Heart.png" />
-    <None Include="Drop.png" />
-    <None Include=".gitignore" />
-    <None Include="Bullet.png" />
-<<<<<<< HEAD
-    <None Include="Island.png" />
+    <None Include="WaterBucket.png" />
     <None Include="waves.wav" />
-=======
-    <None Include="waves.wav" />
-    <None Include="Island.png" />
-    <None Include="GameOver.png" />
->>>>>>> 484dc9436b90534883e629d5260439bbe6eb04b0
+    <None Include="Wiskey.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />
