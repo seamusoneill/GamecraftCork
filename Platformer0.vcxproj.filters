@@ -67,7 +67,10 @@
     <ClCompile Include="hudDisplay.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Island.cpp" />
+<<<<<<< HEAD
+=======
     <ClCompile Include="HealthIcon.cpp" />
+>>>>>>> 484dc9436b90534883e629d5260439bbe6eb04b0
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -141,7 +144,10 @@
     <ClInclude Include="hudDisplay.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Island.h" />
+<<<<<<< HEAD
+=======
     <ClInclude Include="HealthIcon.h" />
+>>>>>>> 484dc9436b90534883e629d5260439bbe6eb04b0
   </ItemGroup>
   <ItemGroup>
     <None Include="Box2D\Box2DConfig.cmake" />
@@ -157,8 +163,14 @@
     <None Include="Drop.png" />
     <None Include=".gitignore" />
     <None Include="Bullet.png" />
+<<<<<<< HEAD
+    <None Include="Island.png" />
+    <None Include="waves.wav" />
+=======
     <None Include="waves.wav" />
     <None Include="Island.png" />
+    <None Include="GameOver.png" />
+>>>>>>> 484dc9436b90534883e629d5260439bbe6eb04b0
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />

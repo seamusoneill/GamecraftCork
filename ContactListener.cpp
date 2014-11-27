@@ -1,5 +1,6 @@
 #include "ContactListener.h"
 #include <iostream>
+#include "AudioManager.h"
 
 ContactListener* ContactListener::instance;
 b2World* ContactListener::mWorld;
@@ -76,6 +77,7 @@ void ContactListener::BeginContact(b2Contact* contact){
 	if (i1 == -2){//if body1 is the pickup
 		if (i2 == 0){
 			body1->SetUserData((void*)-100);//Collect the pickup
+			AudioManager::getAudioManager()->playPickup();
 			body2->SetUserData((void*)-200);//player gets water
 		}
 	}
@@ -83,6 +85,7 @@ void ContactListener::BeginContact(b2Contact* contact){
 		if (i2 == -2){//if body2 is the pickup  
 			body1->SetUserData((void*)-200);//player gets water
 			body2->SetUserData((void*)-100);//Collect the pickup	
+			AudioManager::getAudioManager()->playPickup();
 		}
 	}
 #pragma endregion
@@ -118,12 +121,14 @@ void ContactListener::BeginContact(b2Contact* contact){
 		if (i2 == -1){
 			body1->SetUserData((void*)-100);
 			body2->SetUserData((void*)-100);
+			AudioManager::getAudioManager()->playCrack();
 		}
 	}
 	if (i1 == -1){//If body1 is the enemy
 		if (i2 == -3){
 			body1->SetUserData((void*)-100);
 			body2->SetUserData((void*)-100);
+			AudioManager::getAudioManager()->playCrack();
 		}
 	}
 #pragma endregion
@@ -133,12 +138,14 @@ void ContactListener::BeginContact(b2Contact* contact){
 		if (i2 == 0){
 			body1->SetUserData((void*)-100);//Player takes damage
 			body2->SetUserData((void*)-100);//destroy the bullet
+			AudioManager::getAudioManager()->playCrack();
 		}
 	}
 	if (i1 == 0){
 		if (i2 == -3){
 			body1->SetUserData((void*)-100);//destroy the bullet
 			body2->SetUserData((void*)-100);//Player takes damage
+			AudioManager::getAudioManager()->playCrack();
 		}
 	}
 #pragma endregion

@@ -3,7 +3,7 @@
 #define TORADIANS (-180/3.1415926536f)
 
 #include "Player.h"
-
+#include "AudioManager.h"
 Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, float radius) : isSpaceDown(false), m_world(theWorld), gRenderer(theRenderer) {
 	m_bodyDef.type = b2_dynamicBody;
 	m_bodyDef.position.Set(position.x * PIXELSTOMETRES, -position.y * PIXELSTOMETRES);
@@ -15,6 +15,8 @@ Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, fl
 	m_speed = .9;
 	m_texture.loadFromFile("Player.png", gRenderer);
 	m_health = 3;
+	m_thirst = 60;
+	isAlive = true;
 }
 
 void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
@@ -23,7 +25,7 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 			//Remove the player Image from the game and replace it with the game over screen
 				m_texture.loadFromFile("GameOver.png", gRenderer);
 				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
-	
+				isAlive = false;
 		}
 		else{
 			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
@@ -33,6 +35,7 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 }
 
 void Player::Update() {
+
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
 			m_body->SetAngularVelocity(-.9);
 	}
@@ -47,6 +50,8 @@ void Player::Update() {
 
 		m_velocity.x = ((float)sin(m_angle) * -m_speed);
 		m_velocity.y = ((float)cos(m_angle) * m_speed);
+
+
 
 		m_body->ApplyForceToCenter(m_velocity, true);
 	}
@@ -71,7 +76,16 @@ void Player::Update() {
 
 	 Collision();//check collision with pickups
 
+	 if(thirstTimer.GetMilliseconds() > 1000)
+	 {
+		 m_thirst--;
+		 thirstTimer.Reset();
+	 }
 
+	 if(m_thirst <= 0)
+	 {
+		 m_health = 0;
+	 }
 }
 
 void Player::Collision(){
@@ -82,7 +96,7 @@ void Player::Collision(){
 	}
 	else if((int)m_body->GetUserData() == -400){
 		if(m_thirst<3){
-			m_thirst++;
+			m_thirst = 60;
 		}
 	}
 	else if((int)m_body->GetUserData() == -100){
@@ -91,6 +105,7 @@ void Player::Collision(){
 	}
 
 	m_body->SetUserData((void*)0);
+
 
 }
 
@@ -112,10 +127,12 @@ int Player::GetThirst(){
 
 void Player::FireCannon()
 {
-	if(timer.GetMilliseconds() >500)
+	if(timer.GetMilliseconds() >500 && isAlive == true)
 	{
 		b2Vec2 direction = m_body->GetWorldVector(b2Vec2(0,1));
-		cannonBalls.push_back(new CannonBall(m_world, gRenderer, m_body->GetPosition()+direction*2.1, 50, direction*10));
+		cannonBalls.push_back(new CannonBall(m_world, gRenderer, m_body->GetPosition()+direction*2.5, 50, direction*10));
 		timer.Reset();
+		AudioManager::getAudioManager()->playCannon();
 	}
+				
 }

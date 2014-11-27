@@ -11,6 +11,23 @@ public:
 	~AudioManager(void);
 	Mix_Music  *backgroundMusic;
 
+
+
+
+	Mix_Chunk *cannon;
+	Mix_Chunk *crack;
+	Mix_Chunk *pickup;
+
+
+
+
+	void playCannon(void);
+	void playCrack(void);
+	void playPickup(void);
+
+
+
+
 	void AudioManager::playBackgroundMusic(void);
 };
 

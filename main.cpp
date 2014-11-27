@@ -12,7 +12,7 @@
 #include "CONSTANTS.h"
 #include "Level.h"
 #include "Player.h"
-
+#include "AudioManager.h"
 Player* p;
 
 Level* lvl;
@@ -50,7 +50,7 @@ void Initialize()
 	SetupWorld();
 	SetupSDL();
 	lvl = new Level();
-	
+	AudioManager::getAudioManager()->playBackgroundMusic();
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
 	lvl->Initialize(m_world, gRenderer,p);
 }
