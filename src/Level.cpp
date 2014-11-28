@@ -25,17 +25,17 @@ void Level::Update(b2Vec2 offset){
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		if(m_enemies[i]->GetAlive())
-			m_enemies[i]->Update(m_player->GetPosition(), m_player->GetVelocity());
+			m_enemies[i]->Update(m_player->GetPosition(), m_player->GetVelocity(),offset);
 	}
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
-		m_pickups[i]->Update();
+		m_pickups[i]->Update(offset);
 	}
 }
 
 void Level::Draw(SDL_Renderer* r)
 {
-	m_background.render(-CONSTANTS::LEVEL_WIDTH / 2 - m_offset.x, -CONSTANTS::LEVEL_HEIGHT / 2 + m_offset.y, NULL, 0, 0, SDL_FLIP_NONE, r);
+	m_background.render(-CONSTANTS::LEVEL_WIDTH / 2 /*- m_offset.x*/, -CONSTANTS::LEVEL_HEIGHT / 2 /*+ m_offset.y*/, NULL, 0, 0, SDL_FLIP_NONE, r);
 	m_island->Draw(r, m_offset);
 	
 }
@@ -44,7 +44,7 @@ int Level::DrawEnemies(void* rendererData)
 {
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Draw(static_cast<SDL_Renderer*>(rendererData), m_offset);
+		m_enemies[i]->Draw(static_cast<SDL_Renderer*>(rendererData));
 
 		for (int j = 0; j < m_enemies[i]->cannonBalls.size(); j++)
 		{
@@ -58,7 +58,7 @@ int Level::DrawPickups(void* rendererData)
 {
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
-		m_pickups[i]->Draw(static_cast<SDL_Renderer*>(rendererData), m_offset);
+		m_pickups[i]->Draw(static_cast<SDL_Renderer*>(rendererData));
 	}
 	return 0;
 }

@@ -33,9 +33,11 @@ SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
 
+b2Vec2 mOffset;
 
 SDL_Thread* threadToDrawEnemies;
 SDL_Thread* threadToDrawPickups;
+SDL_Thread* threadToDrawRest;
 
 SDL_sem* dataLock = nullptr; // Will protect Renderer
 
@@ -49,9 +51,9 @@ int DrawLevelEnemies(void* data)
 	while(true){
 		SDL_SemWait( dataLock );
 		// Critical Section
-		lvl.DrawEnemies(data);
-		cout<<"Draws enemies Stuff"<<endl;
-		SDL_RenderPresent(static_cast<SDL_Renderer*>(data));
+		
+	//	cout<<"Draws enemies Stuff"<<endl;
+		// Critical Section
 		
 		SDL_SemPost( dataLock );
 	}
@@ -63,12 +65,15 @@ int DrawLevelPickups(void* data)
 {
 	while(true){
 		 SDL_SemWait( dataLock );
-
+	     //SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		// SDL_RenderClear((SDL_Renderer*)data);
 		// Critical Section
+		 lvl.DrawEnemies(data);
 		lvl.DrawPickups(data);
-		cout<<"Draws pickup Stuff"<<endl;
-		//SDL_RenderPresent(static_cast<SDL_Renderer*>(data));
+		//cout<<"Draws pickup Stuff"<<endl;
 		// Critical Section
+		 //SDL_Delay( 16 + rand() % 640 );
+		SDL_RenderPresent((SDL_Renderer*)data);
 
 		SDL_SemPost( dataLock );
 	}
@@ -76,6 +81,24 @@ int DrawLevelPickups(void* data)
 	return 0;
 }
 
+void DrawEntities(SDL_Renderer* r);
+
+//thread 3
+int DrawTheRest(void* data)
+{
+	while(true){
+		 SDL_SemWait( dataLock );
+
+		// Critical Section
+		DrawEntities((SDL_Renderer*)data);
+		// Critical Section
+
+		//SDL_RenderPresent((SDL_Renderer*)data);
+		SDL_SemPost( dataLock );	
+	}
+
+	return 0;
+}
 
 void SetupWorld() {
 	b2Vec2 gravity(0, 0);
@@ -95,30 +118,26 @@ void Initialize()
 	SetupWorld();
 	lvl = Level();
 	AudioManager::getInstance()->playBackgroundMusic();
-	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
+	p = new Player(m_world, gRenderer, b2Vec2(200, 200), 40);
 	lvl.Initialize(m_world, gRenderer,p);
-
+	mOffset = b2Vec2(	(p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, 
+						(p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 	
 	dataLock = SDL_CreateSemaphore( 1 );
 	threadToDrawPickups =  SDL_CreateThread( DrawLevelPickups, "PickupDrawThread", (void*)gRenderer);
-	threadToDrawEnemies =  SDL_CreateThread( DrawLevelEnemies, "EnemyDrawThread", (void*)gRenderer);
-
+	//threadToDrawEnemies =  SDL_CreateThread( DrawLevelEnemies, "EnemyDrawThread", (void*)gRenderer);
+	threadToDrawRest  =  SDL_CreateThread( DrawTheRest, "RestDrawThread", (void*)gRenderer);
 }
 
-void DrawEntities(b2Vec2 offset) {
-	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-	//SDL_RenderClear( gRenderer );
+void DrawEntities(SDL_Renderer* r) {
 
-	lvl.Draw(gRenderer);
-	p->Draw(gRenderer, offset);
+	lvl.Draw(r);
+	p->Draw(r);
 	
 	for(int i = 0; i < p->cannonBalls.size();i++)
 	{
-		p->cannonBalls[i]->Draw(gRenderer, offset);
+		p->cannonBalls[i]->Draw(r, p->m_offset);
 	}
-	
-	//for(int i =0; i<90000;i++){}
-	SDL_RenderPresent(gRenderer);
 }
 
 void Quit() {
@@ -133,30 +152,34 @@ void Quit() {
 }
 
 void Update() {
+	
+	//SDL_RenderClear( gRenderer );
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
-	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
+	mOffset = b2Vec2(	(p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, 
+						(p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
-	if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
-	{
-		offset.x = -CONSTANTS::LEVEL_WIDTH / 2;
-	}
-	if (p->GetPosition().x > CONSTANTS::LEVEL_WIDTH/120)
-	{
-		offset.x = -CONSTANTS::LEVEL_WIDTH / 60;
-	}
-	//Bottom Screen
-	if (p->GetPosition().y < -CONSTANTS::LEVEL_HEIGHT/ 60 + 11.5)
-	{
-		offset.y = -CONSTANTS::LEVEL_HEIGHT / 5;
-	}
-	//Top screen
-	if (p->GetPosition().y > CONSTANTS::LEVEL_HEIGHT / 60 - 11.5)
-	{
-		offset.y = CONSTANTS::LEVEL_HEIGHT / 2;
-	}
-	b2Vec2 m_position = p->GetPosition();
-	p->Update();
-	lvl.Update(offset);
+	//if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
+	//{
+	//	mOffset.x = -CONSTANTS::LEVEL_WIDTH / 2;
+	//}
+	//if (p->GetPosition().x > CONSTANTS::LEVEL_WIDTH/120)
+	//{
+	//	mOffset.x = -CONSTANTS::LEVEL_WIDTH / 60;
+	//}
+	////Bottom Screen
+	//if (p->GetPosition().y < -CONSTANTS::LEVEL_HEIGHT/ 60 + 11.5)
+	//{
+	//	mOffset.y = -CONSTANTS::LEVEL_HEIGHT / 5;
+	//}
+	////Top screen
+	//if (p->GetPosition().y > CONSTANTS::LEVEL_HEIGHT / 60 - 11.5)
+	//{
+	//	mOffset.y = CONSTANTS::LEVEL_HEIGHT / 2;
+	//}
+	//b2Vec2 m_position = p->GetPosition();
+	
+	p->Update(mOffset);
+	lvl.Update(mOffset);
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();
@@ -167,21 +190,16 @@ void Update() {
 		isMouseDown = true;
 	}
 	else { isMouseDown = false; }
-
-	DrawEntities(offset);
-
-
 }
 
 int main(int argc, char* args[]) {
 	Initialize();
 	while (isRunning) {
-		cout<< "draw the rest"<<endl;
 		Update();
 		
 	}
 
-
+	SDL_WaitThread( threadToDrawRest, nullptr );
 	SDL_WaitThread( threadToDrawEnemies, nullptr );
 	SDL_WaitThread( threadToDrawPickups, nullptr );
 	return 0;

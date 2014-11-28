@@ -4,6 +4,7 @@
 
 #include "include/Player.h"
 #include "include/AudioManager.h"
+#include <iostream>
 
 
 Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, float radius) : isSpaceDown(false), m_world(theWorld), gRenderer(theRenderer) {
@@ -22,23 +23,25 @@ Player::Player(b2World* theWorld, SDL_Renderer* theRenderer, b2Vec2 position, fl
 	isAlive = true;
 }
 
-void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
+void Player::Draw(SDL_Renderer* gRenderer) {
 
 		if(m_health<=0){
 			//Remove the player Image from the game and replace it with the game over screen
 				m_texture.loadFromFile("GameOver.png", gRenderer);
 				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
 				isAlive = false;
-				deadTexture.render((m_body->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) - offset.x, -(m_body->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) + offset.y, NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+				deadTexture.render((m_body->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) /*- m_offset.x*/, -(m_body->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) /*+ m_offset.y*/, NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 		}
 		else{
-			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,
-				-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + offset.y,
+			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) /*- m_offset.x*/,
+				-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) /*+ m_offset.y*/,
 				NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer);
 		}
+	std::cout<< m_body->GetPosition().y<< std::endl;
 }
 
-void Player::Update() {
+void Player::Update( b2Vec2 offset) {
+	m_offset = offset;
 	if(isAlive){
 		if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
 			m_body->SetAngularVelocity(-.9);

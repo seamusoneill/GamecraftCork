@@ -32,5 +32,5 @@ Island::~Island()
 void Island::Update(){}
 
 void Island::Draw(SDL_Renderer* renderer,b2Vec2 offset){
-	m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - offset.x,-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + offset.y,NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, renderer);
+	m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) /*- offset.x*/,-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) /*+ offset.y*/,NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, renderer);
 }

@@ -33,15 +33,16 @@ PickUp::PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool i
 	m_Body->CreateFixture(&fixtureDef);
 }
 
-void PickUp::Draw(SDL_Renderer* renderer, b2Vec2 offset){
+void PickUp::Draw(SDL_Renderer* renderer){
 	if (m_alive == true){
-	mTexture.render((m_Body->GetPosition().x * METRESTOPIXELS) - (mTexture.getWidth() / 2) - offset.x,
-		-(m_Body->GetPosition().y * METRESTOPIXELS) - (mTexture.getHeight() / 2) + offset.y, NULL,NULL , NULL, SDL_FLIP_NONE, renderer );
+	mTexture.render((m_Body->GetPosition().x * METRESTOPIXELS) - (mTexture.getWidth() / 2) /*- m_offset.x*/,
+		-(m_Body->GetPosition().y * METRESTOPIXELS) - (mTexture.getHeight() / 2) /*+ m_offset.y*/, NULL,NULL , NULL, SDL_FLIP_NONE, renderer );
 	}
 }
 
 
-void PickUp::Update(){
+void PickUp::Update( b2Vec2 offset){
+	 m_offset = offset;
 	if((int)m_Body->GetUserData() == -100){
 		m_alive = false;
 		m_Body->GetWorld()->DestroyBody(m_Body);

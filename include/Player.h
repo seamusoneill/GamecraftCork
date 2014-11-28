@@ -12,8 +12,8 @@ class Player {
 public:
 	Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius);
 	~Player();
-	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset);
-	void Update();
+	void Draw(SDL_Renderer* gRenderer);
+	void Update(b2Vec2 offset);
 	b2Vec2 GetPosition();
 
 	b2Vec2 GetVelocity();
@@ -21,8 +21,9 @@ public:
 	int GetThirst();
 	void Collision();
 	std::vector<CannonBall*> cannonBalls;
-
+b2Vec2 m_offset;
 private:
+	
 	b2BodyDef m_bodyDef;
 	b2Body* m_body;
 	b2PolygonShape m_shape;

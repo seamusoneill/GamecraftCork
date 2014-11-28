@@ -29,8 +29,8 @@ CannonBall::~CannonBall()
 
 void CannonBall::Draw(SDL_Renderer* gRenderer, b2Vec2 offset)
 {
-	texture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (texture.getWidth() / 2) - offset.x, 
-		-(dynamicBody->GetPosition().y * METRESTOPIXELS) - (texture.getWidth() / 2) + offset.y, 
+	texture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (texture.getWidth() / 2) /*- offset.x*/, 
+		-(dynamicBody->GetPosition().y * METRESTOPIXELS) - (texture.getWidth() / 2) /*+ offset.y*/, 
 		NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 }
 
