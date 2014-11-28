@@ -39,20 +39,20 @@ SDL_Thread* threadToDrawPickups;
 
 SDL_sem* dataLock = nullptr; // Will protect Renderer
 
-
-// object to protect
 Level lvl;
 
+int frame1 = 0;
+int frame2 = 0;
 // thread 1
 int DrawLevelEnemies(void* data)
 {
 	while(true){
 		SDL_SemWait( dataLock );
-
 		// Critical Section
 		lvl.DrawEnemies(data);
 		cout<<"Draws enemies Stuff"<<endl;
-		// Critical Section
+		SDL_RenderPresent(static_cast<SDL_Renderer*>(data));
+		
 		SDL_SemPost( dataLock );
 	}
 	return 0;
@@ -67,15 +67,14 @@ int DrawLevelPickups(void* data)
 		// Critical Section
 		lvl.DrawPickups(data);
 		cout<<"Draws pickup Stuff"<<endl;
+		//SDL_RenderPresent(static_cast<SDL_Renderer*>(data));
 		// Critical Section
 
-		 SDL_SemPost( dataLock );
+		SDL_SemPost( dataLock );
 	}
+
 	return 0;
 }
-
-
-
 
 
 void SetupWorld() {
@@ -92,25 +91,23 @@ void SetupSDL() {
 
 void Initialize()
 {
-
-	
-	dataLock = SDL_CreateSemaphore( 1 );
-	threadToDrawPickups =  SDL_CreateThread( DrawLevelEnemies, "PickupDrawThread", (void*)gRenderer);
-	SDL_Delay( 16 + rand() % 32 );
-	threadToDrawEnemies =  SDL_CreateThread( DrawLevelPickups, "EnemyDrawThread", (void*)gRenderer);
-
-
-	SetupWorld();
 	SetupSDL();
+	SetupWorld();
 	lvl = Level();
 	AudioManager::getInstance()->playBackgroundMusic();
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
 	lvl.Initialize(m_world, gRenderer,p);
+
+	
+	dataLock = SDL_CreateSemaphore( 1 );
+	threadToDrawPickups =  SDL_CreateThread( DrawLevelPickups, "PickupDrawThread", (void*)gRenderer);
+	threadToDrawEnemies =  SDL_CreateThread( DrawLevelEnemies, "EnemyDrawThread", (void*)gRenderer);
+
 }
 
 void DrawEntities(b2Vec2 offset) {
 	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-	SDL_RenderClear( gRenderer );
+	//SDL_RenderClear( gRenderer );
 
 	lvl.Draw(gRenderer);
 	p->Draw(gRenderer, offset);
@@ -120,6 +117,7 @@ void DrawEntities(b2Vec2 offset) {
 		p->cannonBalls[i]->Draw(gRenderer, offset);
 	}
 	
+	//for(int i =0; i<90000;i++){}
 	SDL_RenderPresent(gRenderer);
 }
 
@@ -157,7 +155,6 @@ void Update() {
 		offset.y = CONSTANTS::LEVEL_HEIGHT / 2;
 	}
 	b2Vec2 m_position = p->GetPosition();
-	DrawEntities(offset);
 	p->Update();
 	lvl.Update(offset);
 
@@ -170,13 +167,18 @@ void Update() {
 		isMouseDown = true;
 	}
 	else { isMouseDown = false; }
+
+	DrawEntities(offset);
+
+
 }
 
 int main(int argc, char* args[]) {
 	Initialize();
 	while (isRunning) {
+		cout<< "draw the rest"<<endl;
 		Update();
-		//cin.get();
+		
 	}
 
 
