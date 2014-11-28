@@ -8,6 +8,7 @@
 #include "CONSTANTS.h"
 #include <vector>
 
+
 class Level{
 private:
 	Player* m_player;
@@ -15,12 +16,18 @@ private:
 	std::vector<Enemy*> m_enemies;
 	Island* m_island;
 	LTexture m_background;
+	b2Vec2 m_offset; // Drawing one.  Changes when player moves.
+
 public:
 	Level();
 
 	void Initialize(b2World*, SDL_Renderer*, Player*);
-	void Update();
-	void Draw(SDL_Renderer*, b2Vec2);
+	void Update( b2Vec2 offset);
+	void Draw(SDL_Renderer*);
+
+	int DrawEnemies(void* rendererData);
+	int DrawPickups(void* rendererData);
+
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "include/Level.h"
 
+
 Level::Level(){
 }
 
@@ -18,7 +19,8 @@ void Level::Initialize(b2World* w, SDL_Renderer* r, Player* p)
 	m_pickups.push_back(new PickUp(w, r, b2Vec2(100, 100), true));
 }
 
-void Level::Update(){
+void Level::Update(b2Vec2 offset){
+	m_offset = offset;
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
@@ -31,25 +33,32 @@ void Level::Update(){
 	}
 }
 
-void Level::Draw(SDL_Renderer* r, b2Vec2 offset)
+void Level::Draw(SDL_Renderer* r)
 {
-	m_background.render(-CONSTANTS::LEVEL_WIDTH / 2 - offset.x, -CONSTANTS::LEVEL_HEIGHT / 2 + offset.y, NULL, 0, 0, SDL_FLIP_NONE, r);
+	m_background.render(-CONSTANTS::LEVEL_WIDTH / 2 - m_offset.x, -CONSTANTS::LEVEL_HEIGHT / 2 + m_offset.y, NULL, 0, 0, SDL_FLIP_NONE, r);
+	m_island->Draw(r, m_offset);
+	
+}
 
+int Level::DrawEnemies(void* rendererData)
+{
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Draw(r, offset);
+		m_enemies[i]->Draw(static_cast<SDL_Renderer*>(rendererData), m_offset);
 
 		for (int j = 0; j < m_enemies[i]->cannonBalls.size(); j++)
 		{
-			m_enemies[i]->cannonBalls[j]->Draw(r, offset);
+			m_enemies[i]->cannonBalls[j]->Draw(static_cast<SDL_Renderer*>(rendererData),m_offset);
 		}
 	}
+	return 0;
+}
 
-
+int Level::DrawPickups(void* rendererData)
+{
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
-		m_pickups[i]->Draw(r, offset);
+		m_pickups[i]->Draw(static_cast<SDL_Renderer*>(rendererData), m_offset);
 	}
-
-	m_island->Draw(r, offset);
+	return 0;
 }
