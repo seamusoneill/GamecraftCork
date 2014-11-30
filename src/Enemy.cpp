@@ -32,14 +32,14 @@ Enemy::~Enemy()
 void Enemy::Draw(SDL_Renderer* gRenderer)
 {
 	if(m_alive){
-		texture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (texture.getWidth() / 2) /*- mOffset.x*/, -(dynamicBody->GetPosition().y * METRESTOPIXELS) - (texture.getWidth() / 2) /*+ mOffset.y*/, NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+		texture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (texture.getWidth() / 2) - mOffset.x, -(dynamicBody->GetPosition().y * METRESTOPIXELS) - (texture.getWidth() / 2) + mOffset.y, NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 	}
 	if(!m_alive){
-		deadTexture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) /*- mOffset.x*/, -(dynamicBody->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) /*+ mOffset.y*/, NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+		deadTexture.render((dynamicBody->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2)- mOffset.x, -(dynamicBody->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) + mOffset.y, NULL, dynamicBody->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 	}
 }
 
-void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity, b2Vec2 offset)
+void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity, b2Vec2 offset,float timeStep)
 {
 	mOffset = offset;
 	int fireRadius = 10;
@@ -85,7 +85,7 @@ void Enemy::Update(b2Vec2 playerPosition,b2Vec2 playerVelocity, b2Vec2 offset)
 	if((int)dynamicBody->GetUserData() == -100)
 	{
 		m_alive = false;
-		dynamicBody->SetLinearVelocity(dynamicBody->GetLinearVelocity()*0.02);
+		dynamicBody->SetLinearVelocity(dynamicBody->GetLinearVelocity()*0.2);
 	}
 }
 

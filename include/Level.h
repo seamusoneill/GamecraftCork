@@ -17,12 +17,13 @@ private:
 	Island* m_island;
 	LTexture m_background;
 	b2Vec2 m_offset; // Drawing one.  Changes when player moves.
+	float m_timeStep;
 
 public:
 	Level();
 
 	void Initialize(b2World*, SDL_Renderer*, Player*);
-	void Update( b2Vec2 offset);
+	void Update( b2Vec2 offset,float timeStep);
 	void Draw(SDL_Renderer*);
 
 	int DrawEnemies(void* rendererData);

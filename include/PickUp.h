@@ -11,7 +11,7 @@ public:
 	PickUp(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position,  bool isWater);
 	~PickUp();
 	void Draw(SDL_Renderer* renderer);
-	void Update( b2Vec2 offset);
+	void Update( b2Vec2 offset,float timeStep);
 
 	bool GetIsWater();
 	float GetValue();

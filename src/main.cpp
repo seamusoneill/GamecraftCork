@@ -14,6 +14,7 @@
 #include "include/Level.h"
 #include "include/Player.h"
 #include "include/AudioManager.h"
+#include "LTimer.h"
 
 
 Player* p;
@@ -43,38 +44,21 @@ SDL_sem* dataLock = nullptr; // Will protect Renderer
 
 Level lvl;
 
-int frame1 = 0;
-int frame2 = 0;
-// thread 1
-int DrawLevelEnemies(void* data)
-{
-	while(true){
-		SDL_SemWait( dataLock );
-		// Critical Section
-		
-	//	cout<<"Draws enemies Stuff"<<endl;
-		// Critical Section
-		
-		SDL_SemPost( dataLock );
-	}
-	return 0;
-}
+LTimer stepTimer;
+
+
 
 //thread 2
-int DrawLevelPickups(void* data)
+int DrawLevelPickupsAndEnemies(void* data)
 {
 	while(true){
 		 SDL_SemWait( dataLock );
-	     //SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-		// SDL_RenderClear((SDL_Renderer*)data);
-		// Critical Section
-		 lvl.DrawEnemies(data);
-		lvl.DrawPickups(data);
-		//cout<<"Draws pickup Stuff"<<endl;
-		// Critical Section
-		 //SDL_Delay( 16 + rand() % 640 );
-		SDL_RenderPresent((SDL_Renderer*)data);
 
+		// Critical Section
+		lvl.DrawEnemies(data);
+		lvl.DrawPickups(data);
+		// Critical Section
+		SDL_RenderPresent((SDL_Renderer*)data);
 		SDL_SemPost( dataLock );
 	}
 
@@ -88,12 +72,10 @@ int DrawTheRest(void* data)
 {
 	while(true){
 		 SDL_SemWait( dataLock );
-
 		// Critical Section
 		DrawEntities((SDL_Renderer*)data);
 		// Critical Section
 
-		//SDL_RenderPresent((SDL_Renderer*)data);
 		SDL_SemPost( dataLock );	
 	}
 
@@ -124,8 +106,7 @@ void Initialize()
 						(p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 	
 	dataLock = SDL_CreateSemaphore( 1 );
-	threadToDrawPickups =  SDL_CreateThread( DrawLevelPickups, "PickupDrawThread", (void*)gRenderer);
-	//threadToDrawEnemies =  SDL_CreateThread( DrawLevelEnemies, "EnemyDrawThread", (void*)gRenderer);
+	threadToDrawPickups =  SDL_CreateThread( DrawLevelPickupsAndEnemies, "PickupDrawThread", (void*)gRenderer);
 	threadToDrawRest  =  SDL_CreateThread( DrawTheRest, "RestDrawThread", (void*)gRenderer);
 }
 
@@ -154,32 +135,38 @@ void Quit() {
 void Update() {
 	
 	//SDL_RenderClear( gRenderer );
-	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
+	float timeStep = stepTimer.getTicks() / 1000.f;
+
+
+	m_world->Step( (1 / 30.0f) * stepTimer.getTicks(), velocityIterations, positionIterations);
 	mOffset = b2Vec2(	(p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, 
 						(p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
-	//if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
-	//{
-	//	mOffset.x = -CONSTANTS::LEVEL_WIDTH / 2;
-	//}
-	//if (p->GetPosition().x > CONSTANTS::LEVEL_WIDTH/120)
-	//{
-	//	mOffset.x = -CONSTANTS::LEVEL_WIDTH / 60;
-	//}
-	////Bottom Screen
-	//if (p->GetPosition().y < -CONSTANTS::LEVEL_HEIGHT/ 60 + 11.5)
-	//{
-	//	mOffset.y = -CONSTANTS::LEVEL_HEIGHT / 5;
-	//}
-	////Top screen
-	//if (p->GetPosition().y > CONSTANTS::LEVEL_HEIGHT / 60 - 11.5)
-	//{
-	//	mOffset.y = CONSTANTS::LEVEL_HEIGHT / 2;
-	//}
+	if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
+	{
+		mOffset.x = -CONSTANTS::LEVEL_WIDTH / 2;
+	}
+	if (p->GetPosition().x > CONSTANTS::LEVEL_WIDTH/120)
+	{
+		mOffset.x = -CONSTANTS::LEVEL_WIDTH / 60;
+	}
+	//Bottom Screen
+	if (p->GetPosition().y < -CONSTANTS::LEVEL_HEIGHT/ 60 + 11.5)
+	{
+		mOffset.y = -CONSTANTS::LEVEL_HEIGHT / 5;
+	}
+	//Top screen
+	if (p->GetPosition().y > CONSTANTS::LEVEL_HEIGHT / 60 - 11.5)
+	{
+		mOffset.y = CONSTANTS::LEVEL_HEIGHT / 2;
+	}
+
 	//b2Vec2 m_position = p->GetPosition();
 	
-	p->Update(mOffset);
-	lvl.Update(mOffset);
+	p->Update(mOffset,timeStep);
+	lvl.Update(mOffset,timeStep);
+
+	stepTimer.start();
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();

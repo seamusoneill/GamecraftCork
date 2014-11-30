@@ -68,6 +68,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PickUp.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\LTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\PickUp.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="src\LTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

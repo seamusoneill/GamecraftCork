@@ -142,6 +142,7 @@
     <ClCompile Include="src\KeyboardManager.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\LTexture.cpp" />
+    <ClCompile Include="src\LTimer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PickUp.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\PickUp.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="src\LTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

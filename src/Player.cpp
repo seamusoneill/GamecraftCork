@@ -30,17 +30,17 @@ void Player::Draw(SDL_Renderer* gRenderer) {
 				m_texture.loadFromFile("GameOver.png", gRenderer);
 				m_texture.render(100,100,NULL, NULL,NULL, SDL_FLIP_NONE, gRenderer);
 				isAlive = false;
-				deadTexture.render((m_body->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) /*- m_offset.x*/, -(m_body->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) /*+ m_offset.y*/, NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
+				deadTexture.render((m_body->GetPosition().x * METRESTOPIXELS) - (deadTexture.getWidth() / 2) - m_offset.x, -(m_body->GetPosition().y * METRESTOPIXELS) - (deadTexture.getWidth() / 2) + m_offset.y, NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer );
 		}
 		else{
-			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) /*- m_offset.x*/,
-				-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) /*+ m_offset.y*/,
+			m_texture.render((m_body->GetPosition().x * METRESTOPIXELS) - (m_texture.getWidth() / 2) - m_offset.x,
+				-(m_body->GetPosition().y * METRESTOPIXELS) - (m_texture.getWidth() / 2) + m_offset.y,
 				NULL, m_body->GetAngle() * TORADIANS, NULL, SDL_FLIP_NONE, gRenderer);
 		}
 	std::cout<< m_body->GetPosition().y<< std::endl;
 }
 
-void Player::Update( b2Vec2 offset) {
+void Player::Update( b2Vec2 offset,float timeStep) {
 	m_offset = offset;
 	if(isAlive){
 		if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
