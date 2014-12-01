@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_thread.h>
+#include <string>
 #include <stdio.h>
 #include "Box2D\Box2D.h"
 #include <iostream>
@@ -25,13 +27,18 @@ bool isMouseDown = false;
 b2World* m_world;
 int32 velocityIterations = 8;
 int32 positionIterations = 3;
+b2Vec2 offset;
 
 //SDL Variables
 SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
 
-
+SDL_sem* gDataLock = NULL;
+int gData = -1;
+int worker( void* data );
+int threadFunction( void* data );
+void close();
 
 void SetupWorld() {
 	b2Vec2 gravity(0, 0);
@@ -56,19 +63,19 @@ void Initialize()
 }
 
 void DrawEntities(b2Vec2 offset) {
-	SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-	SDL_RenderClear( gRenderer );
+	//SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	//SDL_RenderClear( gRenderer );
 
 	
-	lvl->Draw(gRenderer, offset);
-	p->Draw(gRenderer, offset);
+	//lvl->Draw(gRenderer, offset);
+	//p->Draw(gRenderer, offset);
 	
-	for(int i = 0; i < p->cannonBalls.size();i++)
-	{
-		p->cannonBalls[i]->Draw(gRenderer, offset);
-	}
+	//for(int i = 0; i < p->cannonBalls.size();i++)
+	//{
+	//	p->cannonBalls[i]->Draw(gRenderer, offset);
+	//}
 	
-	SDL_RenderPresent(gRenderer);
+	//SDL_RenderPresent(gRenderer);
 }
 
 void Quit() {
@@ -83,7 +90,7 @@ void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
 	
 	
-	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
+	offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
 	if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
 	{
@@ -122,6 +129,95 @@ void Update() {
 int main(int argc, char* args[]) {
 	Initialize();
 
-	while (isRunning) Update();
+	//Run the thread
+    int data = 101;
+    //SDL_Thread* threadID = SDL_CreateThread( threadFunction, "ThreadA", (void*)data );
+	SDL_Thread* threadA = SDL_CreateThread( worker, "Thread A", (void*)"Thread A" );
+	SDL_Delay( 16 + rand() % 32 );
+	SDL_Thread* threadB = SDL_CreateThread( worker, "Thread B", (void*)"Thread B" );
+
+	while( isRunning )
+	{
+		Update();
+		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		//SDL_RenderClear( gRenderer );
+		p->Draw(gRenderer, offset);
+		for(int i = 0; i < p->cannonBalls.size();i++)
+		{
+			p->cannonBalls[i]->Draw(gRenderer, offset);
+		}
+		SDL_RenderPresent( gRenderer );
+	}
+
+    //Remove timer in case the call back was not called
+    //SDL_WaitThread( threadID, NULL );
+	SDL_WaitThread( threadA, NULL );
+	SDL_WaitThread( threadB, NULL );
+
+	return 0;
+}
+
+int threadFunction( void* data )
+{
+	while( isRunning )
+	{
+		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderClear( gRenderer );
+		lvl->Draw(gRenderer, offset);
+		SDL_RenderPresent( gRenderer );
+	}
+    return 0;
+}
+
+void close()
+{
+	//Free semaphore
+	SDL_DestroySemaphore( gDataLock );
+	gDataLock = NULL;
+
+	//Destroy window	
+	SDL_DestroyRenderer( gRenderer );
+	//SDL_DestroyWindow( gWindow );
+	//gWindow = NULL;
+	gRenderer = NULL;
+
+	//Quit SDL subsystems
+	IMG_Quit();
+	SDL_Quit();
+}
+
+int worker( void* data )
+{
+	//Pre thread random seeding
+	srand( SDL_GetTicks() );
+	
+	//Work 5 times
+	//for( int i = 0; i < 5; ++i )
+	//{
+	while( isRunning )
+	{
+		//Wait randomly
+		SDL_Delay( 16 + rand() % 32 );
+		
+		//Lock
+		SDL_SemWait( gDataLock );
+
+		//"Work"
+		gData = rand() % 256;
+
+		//Unlock
+		SDL_SemPost( gDataLock );
+
+		//Wait randomly
+		SDL_Delay( 16 + rand() % 640 );
+		
+		while( isRunning )
+		{
+			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+			SDL_RenderClear( gRenderer );
+			lvl->Draw(gRenderer, offset);
+			SDL_RenderPresent( gRenderer );
+		}
+	}
 	return 0;
 }

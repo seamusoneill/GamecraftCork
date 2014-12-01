@@ -226,17 +226,21 @@
     <None Include="Box2D\Box2DConfig.cmake" />
     <None Include="Box2D\Particle\b2ParticleAssembly.neon.s" />
     <None Include="Bullet.png" />
+    <None Include="cannon.wav" />
     <None Include="CannonBall.png" />
+    <None Include="crack.wav" />
     <None Include="Drop.png" />
     <None Include="GameOver.png" />
     <None Include="Heart.png" />
     <None Include="Island.png" />
+    <None Include="pickup.wav" />
     <None Include="PirateShip.png" />
     <None Include="Player.png" />
     <None Include="README.md" />
     <None Include="WaterBucket.png" />
     <None Include="waves.wav" />
     <None Include="Wiskey.png" />
+    <None Include="YouWin.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Box2D\CMakeLists.txt" />
