@@ -13,7 +13,7 @@ void Level::Initialize(b2World* w, SDL_Renderer* r, Player* p)
 	m_pickups.push_back(new PickUp(w, r, b2Vec2(100, 100), true));
 }
 
-void Level::Update(){
+void Level::Update( void *data ){
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{

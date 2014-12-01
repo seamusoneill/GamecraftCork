@@ -34,7 +34,7 @@ void Player::Draw(SDL_Renderer* gRenderer, b2Vec2 offset) {
 		}
 }
 
-void Player::Update() {
+void Player::Update( void *data ) {
 
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::D)) {
 			m_body->SetAngularVelocity(-.9);

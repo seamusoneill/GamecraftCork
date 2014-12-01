@@ -13,7 +13,7 @@ public:
 	Player(b2World* world, SDL_Renderer* gRenderer, b2Vec2 position, float radius);
 	~Player();
 	void Draw(SDL_Renderer* gRenderer, b2Vec2 offset);
-	void Update();
+	void Update(void *);
 	b2Vec2 GetPosition();
 
 	b2Vec2 GetVelocity();

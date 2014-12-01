@@ -19,7 +19,7 @@ public:
 	Level();
 
 	void Initialize(b2World*, SDL_Renderer*, Player*);
-	void Update();
+	void Update(void*);
 	void Draw(SDL_Renderer*, b2Vec2);
 };
 

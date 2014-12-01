@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_thread.h>
 #include <stdio.h>
 #include "Box2D\Box2D.h"
 #include <iostream>
@@ -13,9 +14,13 @@
 #include "Level.h"
 #include "Player.h"
 #include "AudioManager.h"
+
 Player* p;
 
 Level* lvl;
+
+SDL_Thread *thread1;
+SDL_Thread *thread2;
 
 //Program Variables
 bool isRunning = true;
@@ -31,6 +36,8 @@ SDL_Window* window;
 SDL_Renderer* gRenderer;
 SDL_Event e;
 
+bool lock1 = false;
+bool lock2 = false;
 
 
 void SetupWorld() {
@@ -45,6 +52,34 @@ void SetupSDL() {
 	IMG_Init(IMG_INIT_PNG);
 }
 
+int lvlUpdate(void* data)
+{
+	while (true)
+	{
+		if (lock2 == false)
+		{
+			lock1 = true;
+			lvl->Update(data);
+			lock1 = false;
+		}
+	}
+	return 0;
+}
+
+int pUpdate(void* data)
+{
+	while (true)
+	{
+	if (lock1 == false)
+	{
+		lock2 = true;
+		p->Update(data);
+		lock2 = false;
+	}
+}
+	return 0;
+}
+
 void Initialize()
 {
 	SetupWorld();
@@ -53,6 +88,8 @@ void Initialize()
 	AudioManager::getAudioManager()->playBackgroundMusic();
 	p = new Player(m_world, gRenderer, b2Vec2(0, 0), 40);
 	lvl->Initialize(m_world, gRenderer,p);
+	thread1 = SDL_CreateThread( lvlUpdate, NULL,NULL );
+	thread2 = SDL_CreateThread( pUpdate,NULL, NULL);
 }
 
 void DrawEntities(b2Vec2 offset) {
@@ -82,9 +119,10 @@ void Quit() {
 void Update() {
 	m_world->Step(1 / 30.0f, velocityIterations, positionIterations);
 	
-	
+
 	b2Vec2 offset = b2Vec2((p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, (p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 
+	/*!Badly written Camera code*/
 	if (p->GetPosition().x < -CONSTANTS::LEVEL_WIDTH/120)
 	{
 		offset.x = -CONSTANTS::LEVEL_WIDTH / 2;
@@ -103,11 +141,10 @@ void Update() {
 	{
 		offset.y = CONSTANTS::LEVEL_HEIGHT / 2;
 	}
+
 	b2Vec2 m_position = p->GetPosition();
 	DrawEntities(offset);
-	p->Update();
-	lvl->Update();
-
+	
 	if (KeyboardManager::instance()->IsKeyDown(KeyboardManager::ESC))
 		Quit();
 
@@ -125,3 +162,4 @@ int main(int argc, char* args[]) {
 	while (isRunning) Update();
 	return 0;
 }
+
