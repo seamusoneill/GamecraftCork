@@ -138,7 +138,9 @@ void Update() {
 	float timeStep = stepTimer.getTicks() / 1000.f;
 
 
-	m_world->Step( (1 / 30.0f) * stepTimer.getTicks(), velocityIterations, positionIterations);
+	m_world->Step( (1 / 60.0f) * stepTimer.getTicks(), velocityIterations, positionIterations);
+
+
 	mOffset = b2Vec2(	(p->GetPosition().x*METRESTOPIXELS) - CONSTANTS::SCREEN_WIDTH / 2, 
 						(p->GetPosition().y*METRESTOPIXELS) + CONSTANTS::SCREEN_HEIGHT / 2);
 

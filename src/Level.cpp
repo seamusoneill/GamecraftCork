@@ -24,8 +24,7 @@ void Level::Update(b2Vec2 offset,float timeStep){
 	m_timeStep =timeStep;
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		if(m_enemies[i]->GetAlive())
-			m_enemies[i]->Update(m_player->GetPosition(), m_player->GetVelocity(),offset,timeStep);
+		m_enemies[i]->Update(m_player->GetPosition(), m_player->GetVelocity(),offset,timeStep);
 	}
 	for (int i = 0; i < m_pickups.size(); i++)
 	{
